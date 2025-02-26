@@ -1,0 +1,42 @@
+# General Settings
+project_name: "WikiClick"
+description: "Embedding-Augmented Retrieval system for Wikipedia pages"
+version: "1.0.0"
+
+# Paths to data directories
+data:
+  raw_data_dir: "/path/to/raw_data"       # Directory for raw Wikipedia dump files
+  processed_data_dir: "/path/to/processed"  # Directory for processed data
+  embeddings_dir: "/path/to/embeddings"   # Directory for storing precomputed embeddings
+  loc_db_path: "/path/to/loc_db.json"     # Path to the Loc_DB file
+
+# Embedding Model Settings
+embedding_model:
+  name: "text-embedding-ada-002"           # The embedding model being used
+  model_type: "OpenAI"                    # Can be OpenAI, HuggingFace, etc.
+  api_key: "your-openai-api-key"          # If using OpenAI, include the API key
+  batch_size: 64                          # Batch size for processing pages
+
+# k-NN Search Settings
+knn_search:
+  algorithm: "FAISS"                      # Search algorithm: FAISS, HNSW, etc.
+  n_neighbors: 5                          # Number of neighbors to retrieve
+  distance_metric: "cosine"               # Distance metric: cosine, euclidean, etc.
+  index_file: "/path/to/knn_index_file"   # Path to pre-built k-NN index
+
+# Inference Settings
+inference:
+  query_embedding_method: "average"       # How to handle embeddings of multi-part queries
+  top_k_results: 10                       # Number of top-k most relevant pages to retrieve
+  context_window_size: 5                  # Number of context pages to provide to the LLM
+
+# Logging Settings
+logging:
+  level: "INFO"                           # Logging level (DEBUG, INFO, WARNING, ERROR)
+  log_file: "/path/to/logs/project.log"   # Log file location
+
+# Other Settings
+batch_processing:
+  enable: true                            # Enable batch processing for large datasets
+  chunk_size: 1000                        # Chunk size for batch processing
+  retries: 3                              # Number of retries for failed operations
