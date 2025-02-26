@@ -1,0 +1,147 @@
+Richard Feynman
+
+Richard Phillips Feynman (IPA: [ˈfaɪnmən]) (New York, 11 maggio 1918 – Los Angeles, 15 febbraio 1988) è stato un fisico e divulgatore scientifico statunitense, Premio Nobel per la fisica nel 1965 per l'elaborazione dell'elettrodinamica quantistica.
+
+
+Firma di Feynman
+È conosciuto per il suo lavoro nella formulazione dell'integrale sui cammini della meccanica quantistica, la teoria dell'elettrodinamica quantistica, e la fisica della superfluidità dell'elio liquido iper-raffreddato, nonché in fisica delle particelle per la quale ha proposto il modello a partoni. Per aver contribuito allo sviluppo dell'elettrodinamica quantistica, Feynman ricevette il Premio Nobel per la fisica nel 1965 insieme a Julian Schwinger e Shin'ichirō Tomonaga.
+
+Feynman sviluppò uno schema largamente utilizzato per raffigurare le espressioni matematiche che descrivono il comportamento delle particelle subatomiche, che prese in seguito il nome di diagramma di Feynman. Durante la sua vita, Feynman era diventato uno dei più famosi scienziati al mondo. In un sondaggio del 1999 della rivista britannica Physics World di 130 fisici di spicco nel mondo si classificò come uno dei primi dieci fisici più grandi di tutti i tempi.[4]
+
+Durante la seconda guerra mondiale aiutò nello sviluppo della bomba atomica e diventò noto al grande pubblico negli anni 1980 come membro della commissione Rogers, il comitato che indagò sul disastro dello Space Shuttle Challenger. Oltre al suo lavoro in fisica teorica, Feynman viene considerato un pioniere del campo del computer quantistico e gli è attribuita l'introduzione del concetto della nanotecnologia. Teneva la cattedra Richard C. Tolman in fisica teorica al California Institute of Technology.
+
+Feynman è stato un divulgatore della fisica sia tramite libri sia tramite conferenze, tra cui una del 1959 sulla nanotecnologia top-down chiamata There's Plenty of Room at the Bottom e la pubblicazione in tre volumi delle sue lezioni agli studenti undergraduate, The Feynman Lectures on Physics (tradotto in italiano come La fisica di Feynman).[5] Feynman deve la sua notorietà anche ai suoi libri semi-autobiografici Surely You're Joking, Mr. Feynman! e What Do You Care What Other People Think? (in italiano rispettivamente Sta scherzando, Mr Feynman! e Che t'importa di ciò che dice la gente?) e dei libri scritti su di lui come Tuva or Bust! di Ralph Leighton e la biografia Genius: The Life and Science of Richard Feynman di James Gleick.
+
+Biografia
+Feynman nacque nel Queens[6], borough di New York, l'11 maggio del 1918 in una famiglia ebraica ashkenazita[6][7], figlio di Melville Arthur Feynman, un direttore delle vendite[7] originario di Minsk (nell'odierna Bielorussia)[8], emigrato negli Stati Uniti da bambino, e di Lucille Phillips, una casalinga. Anche una delle sorelle, Joan, intraprese la carriera scientifica divenendo astrofisica. Feynman fu ciò che si suol definire un "locutore tardivo", avendo proferito la sua prima parola soltanto all'età di tre anni, e per tutta la propria vita mantenne un fortissimo accento newyorchese[9][10][11][12], tanto da far commentare una volta ad i suoi illustri colleghi ed amici Wolfgang Pauli ed Hans Bethe che parlava come «un barbone»[11].
+
+Cresciuto a Far Rockaway[7], un quartiere del Queens, fu soprattutto grazie al padre che il futuro fisico indirizzò la sua vorace curiosità verso le materie scientifiche, avendogli questi proposto fin dalla più tenera età letture e problemi di carattere scientifico; un esempio significativo dell'influenza del padre è riportato nella raccolta di aneddoti Che t'importa di ciò che dice la gente? e riguarda i limiti della scienza, specialmente in riferimento al concetto di inerzia nella seconda legge della dinamica. Dalla madre, invece, ricavò il suo spiccato e scanzonato senso dell'umorismo che, in età adulta, lo contraddistinse agli occhi del grande pubblico[13].
+
+La sua vivace intelligenza trovò nei volumi dell'Enciclopedia Britannica un fertile terreno di coltura, che venne precocemente ampliato ricorrendo a testi specifici di matematica. Feynman si dedicò autonomamente al calcolo differenziale molto prima dei suoi coetanei e arrivò a sviluppare indipendentemente una serie di notazioni e strumenti per rappresentare e trattare le funzioni trigonometriche elementari. Questa abilità nel costruirsi strumenti applicativi su misura la si ritrova negli anni della maturità scientifica, con lo sviluppo dei diagrammi di Feynman e degli integrali di Feynman, che avrebbero costituito la "balestra in un mondo in cui tutti erano armati di arco e frecce". I suoi interessi nel campo della scienza furono molteplici e riguardarono anche la chimica, la biologia e l'elettronica.
+
+Partecipazione al Progetto Manhattan
+
+Feynman e Oppenheimer a Los Alamos
+Conseguì la laurea e il dottorato in fisica al MIT e a Princeton. Mentre portava avanti il dottorato di ricerca, il suo riconosciuto talento per la fisica e la matematica gli valse un posto all'interno del Progetto Manhattan sotto la guida di Robert Oppenheimer, con il quale il governo degli Stati Uniti si proponeva di sviluppare la prima bomba nucleare. Contattato da Robert Rathbun Wilson, inizialmente preferì declinare l'offerta, ma poi decise di partecipare per timore che la Germania nazista potesse ottenere per prima l'arma atomica. La conclusione del progetto gli provocò emozioni contrastanti a causa delle due bombe atomiche sganciate sul Giappone nell'agosto del 1945.[14][15] Feynman osservò la prima esplosione nucleare, la bomba di Trinity, a occhio nudo e con la sola protezione del vetro del parabrezza di un autocarro per schermare le radiazioni ionizzanti nocive ad alcuni chilometri di distanza, mentre tutti gli altri indossarono degli specifici occhialini con le lenti oscurate per proteggersi dal bagliore accecante.[16] Il 16 giugno 1945 mentre Feynman lavorava ancora al progetto, la sua prima moglie, Arline, morì a soli 25 anni ad Albuquerque, a causa della tubercolosi di cui soffriva da tempo.[17]
+
+L'insegnamento e il Premio Nobel
+
+Richard Feynman insegnante all'università Cornell
+Dopo la seconda guerra mondiale accettò una cattedra alla Cornell University, dove riprese a sviluppare l'idea su cui stava lavorando prima della guerra; si trattava di un metodo per calcolare le probabilità di transizione da uno stato quantistico a un altro. Sviluppò così, basandosi sulle idee di Paul Dirac e Werner Karl Heisenberg un nuovo formalismo per la meccanica quantistica, denominato integrale sui cammini, grazie al quale poté elaborare in seguito l'elettrodinamica quantistica, che gli valse il premio Nobel per la fisica nel 1965 assieme a Sin-Itiro Tomonaga e Julian Schwinger. Tale integrale, noto anche come somma sulle storie di Feynman è stato utilizzato in seguito da Stephen Hawking, nell'ambito dell'interpretazione a molti mondi, per elaborare le teorie della cosmologia top down (un modello di fine-tuned Universe) e dello stato di Hartle-Hawking.[18]
+
+Elaborò delle formule, note come formule di Feynman, attraverso cui è possibile dedurre i potenziali ritardati di Liènard e Wiechert relativi a campi prodotti da una carica puntiforme che si muove di moto arbitrario in un riferimento inerziale e che, sulla base del principio di sovrapposizione, permettono poi di esprimere i potenziali prodotti da un qualsiasi sistema di cariche in moto arbitrario. Dall'espressione formale di questi potenziali, in particolare risalta il ruolo del tempo e delle sue relative simmetrie nei fenomeni elettromagnetici.[19]
+
+A partire dagli anni cinquanta fu docente di fisica al California Institute of Technology e si occupò di superfluidità, superconduttività e del decadimento beta dei neutroni. Le lezioni di fisica tenute al California Institute of Technology negli anni compresi tra il 1962 e il 1964 sono state raccolte in una serie di volumi apprezzati da generazioni di fisici e oggetto di numerose ristampe (v. The Feynman Lectures on Physics).
+
+Disastro dello Space Shuttle Challenger
+
+Il disastro dello Space Shuttle Challenger del 1986
+Feynman era esitante a unirsi alla commissione Rogers, incaricata nel 1986 dal presidente Ronald Reagan di indagare sulle cause del disastro dello Space Shuttle Challenger. Disse a sua moglie: "Washington D.C. è un grande mondo misterioso per me, con una forza straordinaria."[20] Lei lo convinse ad unirsi, dicendo che avrebbe potuto scoprire qualcosa che altri non avevano notato. Dato che Feynman non si era tirato indietro dall'incolpare la NASA per il disastro, si è scontrato con William Rogers, presidente della commissione ed ex Segretario di Stato. Durante una pausa in un'udienza, Rogers disse a Neil Armstrong, un altro membro della commissione: "Feynman sta diventando un rompiscatole." Durante un'udienza trasmessa in TV, Feynman dimostrò che il materiale usato negli O-ring dello shuttle era diventato meno resiliente con il freddo della notte precedente il lancio. Fece analizzare un campione di quel materiale immerso in acqua gelata. In conclusione, la commissione determinò che il disastro era stato causato dall'O-ring primario che non si era sigillato adeguatamente per l'insolito freddo a Cape Canaveral.[21]
+
+Feynman ha dedicato la seconda metà del suo libro Che t'importa di ciò che dice la gente alla sua esperienza nella commissione Rogers, divagando dai soliti aneddoti, brevi e scherzosi per un racconto esteso e sobrio. Il resoconto di Feynman rivela una disconnessione tra gli ingegneri della NASA e i dirigenti che fu molto più impressionante di quello che si aspettava. Le sue interviste ai manager di alto rango della NASA hanno rivelato fraintendimenti sorprendenti di concetti elementari. Ad esempio, i manager della NASA hanno dichiarato che c'era una possibilità su 100.000 di un fallimento catastrofico dello shuttle, ma Feynman ha scoperto che gli ingegneri proprio della NASA stimarono quella probabilità a 1 su 200. Ha concluso che la stima della direzione della NASA sull'affidabilità dello Space Shuttle non era realistica, ed era particolarmente arrabbiato per il fatto che la NASA la avesse usata per reclutare Christa McAuliffe nel programma Teacher-in-Space. Mise inoltre in guardia nella sua appendice al rapporto della Commissione (che è stato incluso solo dopo aver minacciato di non firmare il rapporto) sul fatto che "Per una tecnologia di successo, la realtà deve avere la precedenza sulle pubbliche relazioni, poiché la natura non può essere ingannata."[22]
+
+Altri interessi e personalità
+
+Feynman nel 1984
+Alle riconosciute doti di fisico affiancava un senso dell'umorismo fuori dal comune e un carattere eccentrico e originale (molti aneddoti sulla sua vita sono raccontati in prima persona nelle raccolte di scritti autobiografici Sta scherzando, Mr. Feynman! e Che ti importa di cosa dice la gente?); aveva la passione per la musica - suonava il bongo,[23] talvolta con una band in locali notturni anche in età matura - e per le arti figurative: eseguiva ritratti femminili a matita che firmava come 'Ofey', talvolta nudi raffiguranti prostitute e spogliarelliste che frequentavano i bar di Los Angeles dove Feynman si esibiva come musicista.[24][25][26] Amava definirsi Nobelist Physicist, teacher, storyteller, bongo player, ovvero Fisico premio Nobel, insegnante, cantastorie, suonatore di bongo.
+
+Quando fu arruolato nell'esercito durante la guerra, fu subito assegnato ad incarichi scientifici riguardanti la balistica; si divertiva ad aprire quasi ogni serratura o cassaforte, gettando regolarmente nel panico i responsabili della sicurezza del progetto, fino a che venne scelto per il Progetto Manhattan. A rendere ancora più surreale e divertente il tutto, scoprì a guerra finita, durante la tradizionale visita medica di leva, di non raggiungere un profilo psichico sufficientemente equilibrato per poter vestire la divisa.
+
+
+Feynman e Paul Dirac
+Sua caratteristica era anche una certa insofferenza verso gli impegni ufficiali, la fama inopportuna e le regole della società, manifestata anche nell'occasione dell'assegnazione del Nobel. Il libro Sta scherzando, Mr. Feynman! si conclude con la trascrizione di una conferenza, in cui vengono messe in ridicolo alcune teorie pseudoscientifiche, mostrandone i molti parallelismi con il fenomeno del Cargo cult, e come il rigore metodologico, definito dal concetto di integrità scientifica, sia la componente fondamentale per distinguere cosa è scienza da cosa non lo è.[27]
+
+A Los Alamos, durante il Progetto Manhattan, Richard Feynman scrisse in una lettera a sua moglie Arlene che l'espansione decimale della frazione 1/243 si ripete in maniera piuttosto divertente:
+
+1
+243
+=
+0
+,
+00411522633744
+…
+{\displaystyle {\frac {1}{243}}=0,00411522633744\ldots }
+Questa lettera irritò il censore della posta fra Los Alamos e il mondo esterno, che temette che la serie di numeri potesse comunicare segreti tecnici. Divertito, Feynman precisò che se realmente si divide 1 per 243, si ottiene quella serie di cifre, così non ci può essere più "informazione" nella lunga serie di numeri di quanta ve ne sia nel singolo numero 243.[28]
+
+Egli possedeva inoltre un piccolo furgone-automobile decorato da lui stesso con i diagrammi da lui inventati e a cui aveva installato la targa personalizzata (possibile nella legislazione californiana) con la scritta QANTUM.[29] In questo furgone spesso si muoveva e a volte ospitava gli studenti, trattandoli in maniera cordiale e allegra, il che lo fece diventare uno dei professori universitari più amati e popolari.[24] Nell'episodio La corrosione dell'addio al celibato della sit-com The Big Bang Theory i protagonisti fanno un viaggio in Messico, affittando il furgone di Feynman; per le riprese è stato utilizzato il veicolo originale.[30] Nell'episodio La reazione di ritrazione i protagonisti si recano a fare un brindisi notturno sulla sua tomba.
+
+Feynman era distinguibile anche per il suo forte accento newyorkese e dell'abbigliamento tipico degli Stati Uniti meridionali, residuo degli anni nel New Mexico.[24]
+
+Opposizione alla teoria delle stringhe
+
+Un diagramma di Feynman nel francobollo dedicato all'Anno mondiale della fisica 2005
+In un'intervista poco prima della morte, espresse così la sua opinione sui colleghi sostenitori della teoria delle stringhe, un'ipotetica teoria del tutto mai verificata sperimentalmente: «Non mi piace il fatto che non calcolano alcunché... Non mi piace che non verifichino le loro idee... Non mi piace che quando ci sono disaccordi con un esperimento, essi confezionino una spiegazione, un aggiustamento, per poi dire, "Beh, potrebbe ancora essere giusta"».[31]
+
+Malattia e morte
+Richard Feynman fu colpito nel 1978 da una rara forma di tumore, un liposarcoma allo stomaco[31]. Fu operato e si sottopose a diverse cure come chemioterapia. Durante l'intervento chirurgico furono danneggiate gravemente la milza e un rene a causa dell'invasività dell'operazione. Nel 1986 i medici scoprirono che Feynman era affetto anche da un'altra malattia, la macroglobulinemia di Waldenström, sintomo di un altro cancro, il linfoma linfoplasmocitico.[32][31] Durante i 10 anni della malattia, Feynman non perse mai la sua ironia e la sua voglia di scoprire, tentando anche di visitare la repubblica federata di Tuva in Unione sovietica, ma il visto arrivò solo dopo la morte, e fu una delle sue sorelle, Michelle, ad effettuare il viaggio. Nell'ottobre 1986 e nell'ottobre 1987 subì due nuove operazioni di asportazione del sarcoma che si era ripresentato nello stomaco, ma come conseguenza degli interventi fu colpito dalla rottura di un'ulcera duodenale e in seguito sviluppò l'insufficienza renale cronica; fu ricoverato il 3 febbraio 1988 ma rifiutò l'emodialisi che avrebbe potuto prolungare la sua vita solo di pochi mesi, viste le patologie di cui soffriva. Morì due settimane dopo a 69 anni, e le sue ultime parole furono «Non sopporterei di morire due volte. È una cosa così noiosa».[31]
+
+Eredità scientifica
+Feynman è ritenuto il padre delle nanotecnologie, avendo considerato per la prima volta nel 1959, con un noto discorso passato alla storia come There's Plenty of Room at the Bottom,[33] la possibilità di manipolazione diretta degli atomi nella sintesi chimica. È inoltre considerato uno degli ispiratori del computer quantistico.
+
+Riconoscimenti
+Gli è stato dedicato un asteroide, 7495 Feynman.[34]
+L'Untriseptio è talvolta chiamato feynmanio
+L'Istituto Foresight gli ha dedicato un premio, il Feynman Prize in Nanotechnology.
+Opere
+Il piacere di scoprire (The Pleasure of Finding Things Out, a cura di J. Robbins), traduzione di Grazia Giberti, Collana Biblioteca Scientifica n.33, Milano, Adelphi, 2002, ISBN 88-459-1722-3.
+R. P. Feynman, Robert Leighton e M. Sands, The Feynman Lectures on Physics: The Definitive and Extended Edition, 2ª ed., Reading (MA), Addison Wesley, 2005, ISBN 0-8053-9045-6.
+La fisica di Feynman, traduzione di Ezio Clementel, Sergio Focardi, Luigi Monari, Bologna, Zanichelli, 2001. Inizialmente pubblicate tra il 1964 e il 1966, le lezioni sono considerate da molti una lettura obbligata per chiunque si interessi alla fisica. L'edizione del 2005 comprende inoltre quattro lezioni rimaste fino ad allora inedite, vertenti sulle tecniche di risoluzione dei problemi e disponibili anche come volume separato: Feynman's Tips on Physics (v. sotto).
+La Fisica di Feynman, traduzione di G. Altarelli, C. Chiuderi, E. Clementel, S. Focardi, S. Franchetti, L. Monari, Giuliano Toraldo di Francia (A. Suvero per il vol. 4), ed. inglese del 2005, Bologna, Zanichelli, 2007, ISBN 978-88-08-04297-2. (cofanetto di 4 volumi, disponibili anche separatamente, si presentavano anche in una versione in brossura, con copertina rossa e disposizione allungata orizzontalmente, con il testo su una semi-pagina in inglese - con le formule - e l'altra semi-pagina in italiano, disposizione molto utile per lo studioso che desiderasse approfondire l'inglese scientifico)
+Volume 1 - Meccanica, radiazione, calore, ISBN 978-88-08-16782-8
+Volume 2 - Elettromagnetismo e materia, ISBN 978-88-08-14298-6
+Volume 3 - Meccanica quantistica, ISBN 978-88-08-04299-6
+Volume 4 - Consigli per risolvere i problemi di fisica (di R. P. Feynman, R. B. Leighton, M. A. Gottlieb), ISBN 978-88-08-24300-3
+Richard Feynman, M. A. Gottlieb e R. Leighton, Feynman's Tips On Physics: A Problem-Solving Supplement to the Feynman Lectures On Physics, Reading (MA), Addison Wesley, 2005, ISBN 0-8053-9063-4.
+Sei pezzi facili (Six Easy Pieces: Essentials of Physics Explained by Its Most Brilliant Teacher, Perseus, Reading (MA) 1994, ISBN 0-201-40955-0, traduzione di Laura Servidei, Collana Piccola Biblioteca n.450, Milano, Adelphi, 2000, ISBN 978-88-459-1551-2.
+David L. Goodstein e Judith R. Goodstein (a cura di), Feynman's Lost Lecture: The Motion of Planets Around the Sun, New York, W. W. Norton & Company Inc., 1996.
+Il moto dei pianeti intorno al Sole. Una lezione inedita di Richard Feynman, Bologna, Zanichelli, 1997, ISBN 88-08-24326-5. L'opera più nota al grande pubblico è la rielaborazione in forma di saggio delle lezioni introduttive ai suoi corsi di Fisica. Una panoramica completa dello stato delle ricerche della fisica nel XX secolo, scoperte, personaggi e problemi aperti, ma anche un inno di amore dello scienziato per la sua materia
+Sei pezzi meno facili (Six Not So Easy Pieces: Einstein's Relativity, Symmetry and Space-Time, Addison Wesley, Reading MA 1997, ISBN 0-201-15026-3), traduzione di G. Rigamonti, Collana Piccola Biblioteca n.512, Milano, Adelphi, 2004, ISBN 978-88-459-1870-4.
+"Sta scherzando, Mr. Feynman!" Vita e avventure di uno scienziato curioso (Surely You're Joking, Mr. Feynman!, Norton, NY, 1985), traduzione di Sylvie Coyaud, riveduta da A. Fruscione, Bologna, Zanichelli, 1988, ISBN 88-08-03718-5.
+Che t'importa di ciò che dice la gente? Altre avventure di uno scienziato curioso (What Do YOU Care What Other People Think? Further Adventures of a Curious Character, Norton, New York 1988), traduzione di Sylvie Coyaud, Bologna, Zanichelli, 1989, ISBN 88-08-15098-4.
+Il senso delle cose (The Meaning of It All, Addison Wesley, New York 1998), traduzione di Laura Servidei, Collana Biblioteca Scientifica, Milano, Adelphi, 1999, ISBN 978-88-459-1463-8.
+Deviazioni perfettamente ragionevoli dalle vie battute. Le lettere di Richard Feynman (Perfectly Reasonable Deviations From the Beaten Track: The Letters of Richard P. Feynman, a cura di Michelle Feynman, introduzione di Timothy Ferris, Basic Books, New York 2005), traduzione di Franco Ligabue, La collana dei casi, Milano, Adelphi, 2006, ISBN 88-459-2119-0.
+Le battute memorabili di Feynman, traduzione di Franco Ligabue, a cura di Michelle Feynman, La collana dei casi, Milano, Adelphi, 2017, ISBN 978-88-459-3150-5.
+QED. La strana teoria della luce e della materia (QED: The Strange Theory of Light and Matter, 1985), Adelphi, 1989, ISBN 978-88-459-0719-7.
+Note
+^ Letteralmente "non capisco qual è il problema della gente"
+^ Traduzione Sylvie Coyaud, capitolo Chi ha rubato la porta?, p. 26
+^ Richard P. Feynman, Sta Scherzando, Mr. Feynman!, New York, W.W. Norton & Company, 1985, pp. 36-37, ISBN 978-88-08-06627-5.
+^ Robert Tindol, Physics World poll names Richard Feynman one of 10 greatest physicists of all time, su media.caltech.edu, California Institute of Technology, 2 dicembre 1999. URL consultato il 1º dicembre 2012 (archiviato dall'url originale il 21 marzo 2012).
+^ Da esso sono stati tratti due volumetti di taglio divulgativo, Six Easy Pieces: Essentials of Physics explained by its most brilliant Teacher (New York, Perseus Books, 1994; trad. it. di Gianni Rigamonti, Sei pezzi facili, Milano, Adelphi, XVI ed. 2004) e il più impegnativo Six not so easy Pieces: Einstein's Relativity, Symmetry and Space-Time (Boston, Addison Wesley, 1997; trad. it. di Gianni Rigamonti, Sei pezzi meno facili, Milano, Adelphi, XVI ed. 2004).
+ Richard P. Feynman – Biographical, su nobelprize.org, The Nobel Foundation. URL consultato il 23 aprile 2013 (archiviato dall'url originale il 1º luglio 2006).
+ J. J. O'Connor e E. F. Robertson, Richard Phillips Feynman, su mathshistory.st-andrews.ac.uk, University of St. Andrews, agosto 2002. URL consultato il 23 aprile 2013 (archiviato dall'url originale il 21 novembre 2019).
+^ Oakes, Elizabeth H. (2007). Encyclopedia of World Scientists, Revised edition. New York: Facts on File. ISBN 978-1-4381-1882-6
+^ Chown, Marcus (1985). Strangeness and Charm. New Scientist: 34. ISSN 0262-4079.
+^ Close, Frank (2011). The Infinity Puzzle: The Personalities, Politics, and Extraordinary Science Behind the Higgs Boson. Oxford University Press. ISBN 978-0-19-959350-7.
+ Sykes, Christopher (1994). No Ordinary Genius: the Illustrated Richard Feynman. New York: W. W. Norton. ISBN 0-393-03621-9.
+^ Friedman, Jerome (2004). A Student's View of Fermi. In Cronin, James W. (ed.). Fermi Remembered. Chicago: University of Chicago Press. ISBN 978-0-226-12111-6.
+^ Feynman, Richard P. (1985). Ralph Leighton (ed.). Surely You're Joking, Mr. Feynman!: Adventures of a Curious Character. W. W. Norton & Co. ISBN 0-393-01921-7.
+^ Brian Clegg, Rhodri Evans, I dieci geni che hanno cambiato la fisica e il mondo intero
+^
+«Un giorno stavo lavorando nel mio ufficio a Princeton, quando Bob Wilson entrò e mi disse che era stato finanziato per un progetto segreto [...] Così mi parlò del problema di separare diversi isotopi dell’uranio con lo scopo ultimo di creare una bomba. [...] Gli dissi che non volevo farlo. [...] Così tornai a lavorare alla mia tesi – per circa tre minuti. Poi iniziai a camminare su e giù e a pensare a questa cosa. I tedeschi avevano Hitler, e la possibilità che mettessero a punto una bomba atomica era ovvia, e la possibilità che la mettessero a punto prima di noi era terrificante. Così decisi di presentarmi alla riunione. [...] Dopo che la bomba [di Trinity] fu esplosa, Los Alamos fu travolta da una grande eccitazione. Tutti festeggiavamo, correvamo in giro. Io mi sedetti su una jeep a suonare i bongos, e così via. Solo un uomo, ricordo, Bob Wilson, se ne stava seduto con aria affranta. Gli chiesi "Perché sei cosi avvilito?". Lui rispose "È una cosa terribile quella che abbiamo fatto". Gli dissi "Ma sei stato tu ad iniziarla. Ci hai coinvolto tu". Vedete, quello che mi era successo – quello che era successo a tutti noi – è che avevamo cominciato per una buona ragione, ma poi si inizia a lavorare duramente per realizzare qualcosa e diventa un piacere, eccitazione. E si smette di pensare, no? Si smette e basta. Bob Wilson era l'unico che stesse ancora pensando, in quel momento. Ritornai alla civiltà poco dopo e andai alla Cornell ad insegnare, e la mia prima impressione fu davvero molto strana. Non riesco più a richiamarla, ma fu molto forte allora. Stavo seduto in un ristorante di New York, ad esempio, guardavo fuori e iniziavo a pensare a quanto fosse stato il raggio distruttivo della bomba di Hiroshima e così via… Quanto distava da lì la 34esima strada?… Tutti quei palazzi, completamente distrutti… E poi me ne andavo in giro e vedevo degli operai costruire un ponte, o una nuova strada, e pensavo "Sono pazzi, non capiscono. Perché si mettono a costruire nuove cose? È tutto inutile". Ma fortunatamente è stato inutile per quasi quarant'anni, ormai, giusto? Quindi mi sbagliavo sull’inutilità del costruire ponti, e sono contento che quelle persone abbiano avuto il buon senso di continuare.»
+
+(Sta scherzando, Mr. Feynman)
+
+^ Feynman, Richard P. (1985). Leighton, Ralph (ed.). Surely You're Joking, Mr. Feynman!: Adventures of a Curious Character. W. W. Norton & Company, p. 134
+^ Feynman si sposò in totale tre volte.
+^ S. Hawking, La teoria del tutto, pp. 92-94
+^ S. Bobbio, E. Gatti, Elettromagnetismo, ottica, Bollati Boringhieri, Torino, 1991, Capitolo 10.
+^ (EN) Mr. Feynman Goes to Washington, su theattic.space, The Attic. URL consultato il 14 luglio 2018.
+^ (EN) James Gleick, Richard Feynman Dead at 69; Leading Theoretical Physicist, in The New York Times, 17 febbraio 1988. URL consultato il 16 gennaio 2019 (archiviato dall'url originale il 14 febbraio 2018).
+^ (EN) Richard Feynman, Appendix F – Personal observations on the reliability of the Shuttle, su history.nasa.gov, Kennedy Space Center. URL consultato l'11 settembre 2017.
+^ Feynman PLAYS THE BONGOS. URL consultato il 21 agosto 2019.
+ È morto Richard Feynman, 'grande vecchio' della fisica, in la Repubblica, 18 febbraio 1988. URL consultato il 3 giugno 2017.
+^ Richard Feynman's Works of Art, su museumsyndicate.com. URL consultato il 5 settembre 2009 (archiviato dall'url originale il 12 gennaio 2012).
+^ R. Feynman, Ma è arte?, in Sta scherzando, Mr. Feynman! Vita e avventure di uno scienziato curioso, Bologna, Zanichelli, 1988.
+^ Sta scherzando, Mr. Feynman! Vita e avventure di uno scienziato curioso, traduzione di Sylvie Coyaud, revisione scientifica di Antonella Fruscione, Le ellissi, Bologna, Zanichelli, giugno 1988 [1985], ISBN 88-08-03718-5.
+^ Richard Feynman. Sta scherzando, Mr. Feynman! Vita e avventure di uno scienziato curioso, Zanichelli, Bologna 1988, pp. 111-112
+^ Fotografia della vettura, su fotuva.org. URL consultato il 22 agosto 2019.
+^ Big Bang Theory 9: Spoiler su Raj e su un viaggio in Messico, su melty.it. URL consultato il 22 luglio 2018 (archiviato dall'url originale il 22 luglio 2018).
+ Come riportato in James Gleick, Genius: The Life and Science of Richard Feynman, 1992, [1]
+^ John Simmons, Lynda Simmons, The Scientific 100, p. 250
+^ Trad. "C'è moltissimo spazio in basso" - dove il termine "in basso" è inteso come il mondo al di sotto delle dimensioni molecolari. Qualche anno dopo Jean-Marie Lehn parafraserà Feynman con l'espressione There's even more room at the top "C'è ancora più spazio di sopra" indicando la strada al di sopra delle dimensioni molecolari verso la chimica supramolecolare
+^ (EN) M.P.C. 29673 del 22 aprile 1997
+Bibliografia
+James Gleick, Genius - The Life and Science of Richard Feynman, Pantheon, New York 1992. Traduzione italiana di Sergio Minucci: Genio - La vita e la scienza di Richard Feynman, Garzanti, Milano 1994, ISBN 88-11-59355-7, ripubblicato nel 1998 con ISBN 88-11-67456-5.
+Lawrence Krauss, Quantum Man - Richard Feynman's Life in Science, 2010, ISBN 978-0-393-06471-1. Traduzione italiana:L'uomo dei quanti - La vita scientifica di Richard Feynman, Le Scienze, Milano 2011.
+Elena Castellani e Leonardo Castellani, Feynman - La vita di un fisico irriverente, Collana I grandi della scienza, Le Scienze, Milano 2013.

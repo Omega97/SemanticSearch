@@ -1,0 +1,128 @@
+Lee Sedol
+
+Lee Sedol (Korean: 이세돌; born 2 March 1983), or Lee Se-dol, is a South Korean former professional Go player of 9 dan rank.[1] As of February 2016, he ranked second in international titles (18), behind only Lee Chang-ho (21). His nickname is "The Strong Stone" ("Ssen-dol"). In March 2016, he played a notable series of matches against the program AlphaGo that ended in Lee losing 1–4.[2]
+
+On 19 November 2019, Lee announced his retirement from professional play, stating that he could never be the top overall player of Go due to the increasing dominance of AI. Lee referred to them as being "an entity that cannot be defeated".[3] In a 2024 New York Times article, Lee said, "losing to AI, in a sense, meant my entire world was collapsing." He also offered additional insight behind why he retired, "I could no longer enjoy the game. So I retired."[4]
+
+Biography
+Lee was born in South Korea in 1983. He is known as 'Bigeumdo Boy' because he was born and grew up on Bigeumdo Island.[5] He studied at the Korea Baduk Association. He is the fifth-youngest (12 years 4 months) to become a professional Go player in South Korean history behind Cho Hun-hyun (9 years 7 months), Lee Chang-ho (11 years 1 months), Cho Hye-yeon (11 years 10 months) and Choi Cheol-han (12 years 2 months).
+
+He ranks second in international titles (18), behind only Lee Chang-ho (21). Despite this, he describes his opening play as "very weak".[6] In February 2013, Lee announced that he planned to retire within three years and move to the U.S. to promote Go.[7] He plays on Tygem as "gjopok".[8]
+
+He is married to Kim Hyun-jin, and he has a daughter, Lee Hye-rim.[9] His older brother Lee Sang-hoon [ko] is also a 9 dan professional go player.[10]
+
+Lee's Broken Ladder Game
+This game was played between Lee Sedol and Hong Chang-sik during the 2003 KAT cup, on 23 April 2003. The game is notable for Lee's use of a broken ladder formation.
+
+Normally playing out a broken ladder is a mistake, associated with beginner play, because the chasing stones are left weak. Between experts it should be decisive, leading to a lost game. Lee, playing black, defied the conventional wisdom, using the broken ladder to capture a large group of Hong's stones in the lower-right side of the board. This brought black's stones in the corner which were previously considered dead back to life. White ultimately resigned.[11]
+																		
+Moves 67 to 97 (Black: Lee Sedol; White: Hong Chang-sik).
+Black wins when White resigns at move 211.
+Match against AlphaGo
+Main article: AlphaGo versus Lee Sedol
+Starting 9 March 2016, Lee played a five-game match, broadcast live, against the computer program AlphaGo, developed by a London-based artificial intelligence firm Google DeepMind, for a $1 million match prize.[12][13][14] He said “I have heard that Google DeepMind’s AI is surprisingly strong and getting stronger, but I am confident that I can win at least this time”.[15] In an interview with Sohn Suk-hee of JTBC Newsroom on 22 February 2016,[16] he showed confidence in his chances again, while saying that even beating AlphaGo by 4–1 may allow the Google DeepMind team to claim its de facto victory and the defeat of him, or even humanity. In this interview he pointed out the time rule in this match, which seems well-balanced so that both he and the AI would fairly undergo time pressure. In another interview at Yonhap News, Lee Se-dol said that he was confident of beating AlphaGo by a score of 5–0, at least 4–1 and accepted the challenge in only five minutes. He also stated "Of course, there would have been many updates in the last four or five months, but that isn’t enough time to challenge me".[17]
+
+On 9 March, Lee played black and lost the first game by resignation.[18] On 10 March, he played white and lost the second game by resignation.[19] On 12 March, he played black and lost the third game as well.[20] On 13 March, he played white and won the fourth game, following an unexpected move at White 78 described as "a brilliant tesuji", and by Gu Li 9 dan as a "divine move" and completely unforeseen by him. GoGameGuru commented that this game was "a masterpiece for Lee Sedol and will almost certainly become a famous game in the history of Go".[21] Lee commented after the victory that he considered AlphaGo was strongest when playing white (second). For this reason, and because he thought winning a second time with black would be more valuable than winning with white, he requested that he play black in the final fifth game, which is considered more risky when following Chinese Go rules.[22] On 15 March, he played black and lost the fifth game, to lose the Go series 1–4.[23]
+																																			
+Game 4, Lee Sedol (white) v. AlphaGo (black).
+First 78 moves
+ 
+After his fourth-match victory, Lee was overjoyed: "I don't think I've ever felt so good after winning just one match. I remember when I said I will win all or lose just one game in the beginning. If this had really happened ― I won 3 rounds and lost this round ― it would have had a great bearing on my reputation. However, since I won after losing 3 games in a row, I am so happy. I will never exchange this win for anything in the world."[24] He added: "I, Lee Se-dol, lost, but mankind did not."[22] After the last match, however, Lee was saddened: "I failed. I feel sorry that the match is over and it ended like this. I wanted it to end well." He also confessed that "As a professional Go player, I never want to play this kind of match again. I endured the match because I accepted it."[25]
+
+Retirement from professional play
+On 19 November 2019, Lee Sedol announced his retirement from professional play, stating that "Even if I become the number one, there is an entity that cannot be defeated."[3]
+
+However, in December he agreed to play a three-game match against the HanDol AI system, developed by Korean NHN Entertainment Corporation. Playing with a two-stone handicap (advantage) for the first and third games of the match and no handicap for the second game, Lee Sedol defeated the machine in the first game.[26] HanDol subsequently won the remaining two games of the match, with a final score of two-to-one, winning the overall contest.[27]
+
+Promotion record
+Lee Sedol turned pro in 1995 as 1 dan, and reached 9 dan in 2003.[28]
+
+Rank	Date	Notes
+1 dan	2 July 1995	Promoted to professional dan rank after passing qualifying test.
+2 dan	1 January 1998	
+3 dan	1 January 2000	
+6 dan	28 March 2003	Won the 7th LG Cup against Lee Changho (4 dan and 5 dan were skipped over due to the Hanguk Kiwon promotion rules).
+7 dan	6 May 2003	Runner up in the KT Cup against Yoo Changhyuk.
+9 dan	7 July 2003	Won 16th Fujitsu Cup against Song Taekon (8 dan was skipped over due to the Hanguk Kiwon promotion rules).
+Career record
+As of 2 May 2019[29][30]
+Year	Won	Lost	Win %
+1997	0	1	0.0%
+1998	0	1	0.0%
+1999	0	0	
+2000	30	12	71.4%
+2001	31	17	64.6%
+2002	48	25	65.8%
+2003	33	18	64.7%
+2004	40	18	69.0%
+2005	44	21	67.7%
+2006	78	28	73.6%
+2007	81	23	77.9%
+2008	74	26	74.0%
+2009	26	15	63.4%
+2010	74	14	84.1%
+2011	54	21	72.0%
+2012	61	25	70.9%
+2013	54	39	58.1%
+2014	59	25	70.2%
+2015	53	27	66.2%
+2016	48	27	64.0%
+2017	29	13	69.0%
+2018	53	36	59.6%
+2019	10	5	66.7%
+Total	980	437	69.2%
+Titles and runners-up
+As of 1 January 2019
+Ranks #3 in total number of titles in Korea and #2 in international titles.
+
+Domestic
+Title	Wins	Runners-up
+Baedalwang	1 (2000)	
+Paedal Cup	1 (2000)	
+Chunwon	1 (2000)	2 (2006, 2008)
+Wangwi		2 (2002, 2004)
+BC Card Cup	1 (2002)	
+KTF Cup	1 (2002)	
+New Pro King	1 (2002)	
+SK Gas Cup	1 (2002)	1 (2000)
+KT Cup		1 (2003)
+Guksu	2 (2007, 2009)	1 (2014)
+Prices Information Cup	3 (2006–2007, 2010)	1 (2008)
+Siptan	1 (2011)	
+Olleh KT Cup	2 (2010–11)	
+GS Caltex Cup	3 (2002, 2006, 2012)	3 (2007, 2013, 2018)
+Myungin	4 (2007–2008, 2012, 2016)	1 (2013)
+Maxim Cup	5 (2005–2007, 2014, 2016)	1 (2013)
+KBS Cup	3 (2006, 2014, 2016)	4 (2001, 2004, 2009, 2015)
+Total	30	17
+Continental
+Title	Wins	Runners-up
+China–Korea New Pro Wang	1 (2002)	
+China–Korea Tengen		1 (2001)
+World Meijin	1 (2018)
+Total	2	1
+International
+Title	Wins	Runners-up
+Fujitsu Cup	3 (2002–2003, 2005)	1 (2010)
+LG Cup	2 (2003, 2008)	2 (2001, 2009)
+Samsung Cup	4 (2004, 2007–2008, 2012)	1 (2013)
+World Oza	2 (2004, 2006)	
+Zhonghuan Cup		1 (2005)
+Asian TV Cup	4 (2007, 2008, 2014, 2015)	2 (2009, 2017)
+BC Card Cup	2 (2010–2011)	
+Chunlan Cup	1 (2011)	1 (2013)
+Mlily Cup (梦百合杯)		1 (2016)
+Total	18	9
+Career total
+Total	50	27[31]
+Korean Baduk League
+Season	Team	Place	Record
+2007	Team No.1 Fire Insurance (Captain)	4th place	9–5[32]
+2008	Team No. 1 Fire Insurance (Captain)	4th place	13–3[33]
+2010	Team Shinan Chunil Salt (Captain)	Champion	16–2[34]
+2011	Team Shinan Chunil Salt (Captain)	7th place	1–2[35]
+Chinese A League
+Season	Team	Place	Record
+2007	Team Guizhou (Captain)	2nd place	9–3[36]
+2008	Team Guizhou (Captain)	2nd place	8–0[37]
+2009	Team Guizhou (Captain)	8th place	6–4[38]
