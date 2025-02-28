@@ -4,7 +4,7 @@ from semanticsearch.src.database import Database
 from semanticsearch.src.embedding import EmbeddingModel
 
 
-def main(k=3):
+def main():
     # Compute embeddings if needed
     compute_embeddings()
 
@@ -13,18 +13,19 @@ def main(k=3):
     emb_model = EmbeddingModel()
     emb_file = 'data/embeddings.json'
 
-    # Write here the query
-    # query = 'Dinosaur bones discovered in the Sahara Desert.'
-    # query = 'Science was invented in the 17th century.'
-    query = 'Diamonds are found mostly in Africa.'
+    while True:
+        # Write here the query
+        print('\n')
+        query = ''
+        while not query:
+            query = input('Enter your query: ')
 
-    # Get recommendations
-    recommendations = knn_search(query, emb_model, emb_file, k=k)
-    print(f'\n\nQuery: {query}\n')
-    for i in range(k):
-        file_name = recommendations[i]
+        # Get recommendations
+        recommendations = knn_search(query, emb_model, emb_file, k=4)
+        file_name = recommendations[0]
         doc = db.get_document(file_name)
         print(f'\n\n{doc[:100]}...')
+        print(f'See also: {recommendations[1:]}')
 
 
 if __name__ == "__main__":
