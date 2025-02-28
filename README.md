@@ -1,6 +1,8 @@
 # Semantic Search 
 ## Embedding-Augmented Retrieval System
 
+(https://docs.google.com/document/d/1dxJrHSRRuKj5rnlWklquTwP6U1giKueaaBx4spn-ayU/edit?usp=sharing)
+
 The goal is to create a framework that:
 1) Create a list of all the **embeddings** of the txt files of the database
 2) At inference time, the **embedding of the query** is used to quickly retrieve the **most relevant files**
