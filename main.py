@@ -1,24 +1,29 @@
 from semanticsearch.src.inference import PageRecommender
 
 
-def main():
+def main(width=50):
+    """
+    Example of how to use the system
+    """
     # Load the recommendation system
     pr = PageRecommender(k=3)
 
-    # Write here the query
-    # query = 'Dinosaur bones discovered in the Sahara Desert.'
-    # query = 'Science was invented in the 17th century.'
-    query = 'Diamonds are found mostly in Africa.'
+    while True:
+        # Get the query
+        query = input("\n\nWrite your query: ")
+        if query is None:
+            break
 
-    # Get recommendations
-    recommendations = pr.recommend(query)
+        # Get recommendations
+        recommendations = pr.recommend(query)
 
-    # Show recommendations
-    print(f'\n\nQuery: {query}\n')
-    for i in range(len(recommendations)):
-        file_name = recommendations[i]
+        # Show recommendations
+        file_name = recommendations[0]
         doc = pr.get_document(file_name)
-        print(f'\n\n{doc[:100]}...')
+        print()
+        for i in range(5):
+            print(f'{doc[i*width:(i+1)*width]}')
+        print(f'\nSee also: {recommendations[1:]}')
 
 
 if __name__ == "__main__":
