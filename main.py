@@ -1,4 +1,3 @@
-from semanticsearch.scripts.compute_embeddings import compute_embeddings
 from semanticsearch.src.inference import PageRecommender
 
 
