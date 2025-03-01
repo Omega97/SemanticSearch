@@ -1,14 +1,9 @@
 import os
 import json
-from semanticsearch.src.database import Database
-from semanticsearch.src.embedding import EmbeddingModel
 
 
-def compute_embeddings(database_path='data/raw/',
-                       embeddings_file='data/embeddings.json'):
+def compute_embeddings(database, embedding_model, embeddings_file):
     # Step 1: Initialize the database and embedding model
-    database = Database(database_path)
-    embedding_model = EmbeddingModel()
 
     # Step 2: List all the documents that require embeddings
     existing_embeddings = {}
