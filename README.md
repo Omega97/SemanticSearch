@@ -3,22 +3,28 @@
 
 >## Embedding-Augmented Retrieval System
 
-This project aims to develop a **semantic retrieval** framework for efficiently searching documents. A pre-trained 
-model generates embeddings for all text files in the database during pre-processing, creating a structured 
-representation of their content.
+This project aims to develop a **semantic retrieval framework** for 
+efficiently searching documents. During pre-processing, a pre-trained 
+model generates embeddings for all text files in the database, creating 
+a structured representation of their content.
 
-At inference time, retrieval is performed by computing the **embedding of the query** and comparing it against 
-the stored embeddings. The most relevant documents are identified based on cosine similarity, ensuring that 
-semantically similar files are recommended.
+At inference time, retrieval is performed by computing the 
+**embedding of the query** and comparing it against the stored embeddings. 
+The most relevant documents are identified based on cosine similarity, 
+ensuring that semantically similar files are recommended.
 
-We introduce a learned endomorphism that **aligns the query embedding** with the page embedding to enhance 
-retrieval accuracy. This transformation is trained to maximize the **cosine similarity** between the 
-query and its corresponding target document. The mapping function is trained on a dataset of query-document 
-pairs, enabling it to adapt to the specific characteristics of the database and improve retrieval performance.
+We introduce a learned endomorphism that **aligns the query embedding** 
+with the page embedding to enhance retrieval accuracy. This 
+transformation is trained to maximize the **cosine similarity** between 
+the query and its corresponding target document. The mapping function 
+is trained on a dataset of query-document pairs, enabling it to adapt 
+to the specific characteristics of the database and improve retrieval 
+performance.
 
 >## Dataset Ideas:
-Our priority is to create a very diverse dataset of **query-document pairs**, so that we can reliably obtain a 
-mapping that reliably improves the system. To achieve this, we considered the following datasets:
+Our priority is to create a very diverse dataset of **query-document pairs**, 
+so that we can reliably obtain a mapping that reliably improves the system. 
+To achieve this, we considered the following datasets:
 1) **WikiPassageQA**, a Wikipedia-based retrieval dataset that can be repurposed for retrieval.
 2) **BEIR Benchmark** (General Information Retrieval), a collection of 18 datasets covering various retrieval 
 tasks, including document and passage retrieval.
@@ -29,9 +35,11 @@ including ad-hoc search, enterprise search, and web retrieval
 
 
 >## Performance
-The goal is to maximize the **cosine similarity** between the query and the document. A secondary evaluation 
-metric for the recommendation system is the **ranking** of the target pages. 
-To maximize the performance of the system, we can try various models, with or without embedding normalization, etc...
+The goal is to maximize the **cosine similarity** between the query and 
+the document. A secondary evaluation metric for the recommendation 
+system is the **ranking** of the target pages. To maximize the performance 
+of the system, we can try various models, with or without embedding 
+normalization, etc...
 
 
 >## Key Elements
