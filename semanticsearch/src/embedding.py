@@ -8,9 +8,10 @@ class EmbeddingModel:
         Initialize the embedding model.
         Default model: 'all-MiniLM-L6-v2' (small & efficient)
         """
+        self.model_name = model_name
         self.model = SentenceTransformer(model_name)
 
-    def encode(self, texts):
+    def encode(self, texts, normalize_embeddings=True):
         """
         Converts a list of text inputs into vector embeddings.
 
@@ -20,4 +21,6 @@ class EmbeddingModel:
         Returns:
             np.ndarray: Array of embeddings (shape: [num_texts, embedding_dim]).
         """
-        return np.array(self.model.encode(texts, convert_to_numpy=True))
+        return np.array(self.model.encode(texts,
+                                          normalize_embeddings=normalize_embeddings,
+                                          convert_to_numpy=True))
