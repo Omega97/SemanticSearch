@@ -11,7 +11,7 @@ def main(width=50):
     while True:
         # Get the query
         query = input("\n\nWrite your query: ")
-        if query is None:
+        if query == '':
             break
 
         # Get recommendations
