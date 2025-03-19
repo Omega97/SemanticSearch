@@ -35,3 +35,13 @@ class TrainingData:
             if file.endswith('.tsv'):
                 key = file.split('.')[0]
                 self.data[key] = load_tsv(os.path.join(self.data_dir, file))
+
+    def get_names(self):
+        """returns the names of the data files"""
+        return tuple(self.data.keys())
+
+    def get_queries_and_docs(self, name):
+        """returns the queries and documents from the specified data file"""
+        queries = self.data[name][:, 0]
+        docs = self.data[name][:, 1]
+        return queries, docs
