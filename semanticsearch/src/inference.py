@@ -1,3 +1,11 @@
+"""
+This file contains a class that evaluates the system's performance
+by verifying the ranking of the correct document in the list of
+retrieved documents. The higher the rank of the correct document, the
+worst the system's performance. The class also contains a method that
+calculates the mean reciprocal rank (MRR) of the system's performance.
+Todo check if the files are in the correct location
+"""
 from semanticsearch.scripts.compute_embeddings import compute_embeddings
 from semanticsearch.src.knn_search import knn_search
 from semanticsearch.src.database import Database
@@ -5,12 +13,15 @@ from semanticsearch.src.embedding import EmbeddingModel
 
 
 class PageRecommender:
-    def __init__(self, data_path='data/raw/', emb_file='data/embeddings.json', k=3):
+    """
+    The PageRecommender system takes a search query and returns the paths
+    of the top-k recommended documents from the database based on the
+    similarity of the query to the documents' embeddings.
+    """
+    def __init__(self, data_path, emb_file, k=3):
         """
-        Initializes the PageRecommender system.
-
-        :param data_path: Path to the database files.
-        :param emb_file: Path to the stored embeddings file.
+        :param data_path: Path to the database files (a directory).
+        :param emb_file: Path to the stored embeddings file (a .json file).
         :param k: Number of recommendations to return.
         """
         print('Loading database...')
@@ -41,9 +52,3 @@ class PageRecommender:
         :param query: The search query.
         """
         return knn_search(query, self.emb_model, self.emb_file, self.k)
-
-
-if __name__ == "__main__":
-    recommender = PageRecommender(k=3)
-    query = 'Diamonds are found mostly in Africa.'  # Example query
-    recommender.recommend(query)
