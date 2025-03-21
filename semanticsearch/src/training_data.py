@@ -5,7 +5,7 @@ import csv
 import numpy as np
 
 
-def load_tsv(filepath, delimiter='\t') -> np.ndarray:
+def load_tsv_(filepath, delimiter='\t') -> np.ndarray:
     """
     Loads a TSV file into an N*2 numpy array of query-document pairs.
     Assumes that the column names are not included in the file.
@@ -22,6 +22,35 @@ def load_tsv(filepath, delimiter='\t') -> np.ndarray:
     return np.array(data)
 
 
+def load_tsv(filepath, delimiter='\t') -> np.ndarray:
+    """
+    Loads a TSV file into an N*2 numpy array of query-document pairs.
+    Assumes that the column names are not included in the file.
+    Warns and skips lines that cause csv.Error during reading.
+
+    :param filepath: The path to the TSV file.
+    :param delimiter: The delimiter character used in the TSV file.
+    :return: A numpy array of query-document pairs.
+    """
+    data = []
+    line_index = 0
+    with open(filepath, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f, delimiter=delimiter)
+        while True:
+            line_index += 1
+            try:
+                row = next(reader)
+                data.append(row)
+            except StopIteration:
+                break  # End of file reached
+            except csv.Error as e:
+                print(f"Warning: CSV error in file {filepath} on line {line_index}: {e}. Skipping.")
+                # Read until the next newline to skip the rest of the problematic line
+                f.readline()
+                continue
+    return np.array(data)
+
+
 class TrainingData:
 
     def __init__(self, data_dir):
@@ -34,7 +63,10 @@ class TrainingData:
         for file in os.listdir(self.data_dir):
             if file.endswith('.tsv'):
                 key = file.split('.')[0]
-                self.data[key] = load_tsv(os.path.join(self.data_dir, file))
+                try:
+                    self.data[key] = load_tsv(os.path.join(self.data_dir, file))
+                except csv.Error as e:
+                    print(f"\nError {e} with file {file}")
 
     def get_names(self):
         """returns the names of the data files"""
