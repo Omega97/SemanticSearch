@@ -38,7 +38,13 @@ def mean_score(counts, k=3):
 
 
 def compute_embeddings(model: EmbeddingModel, queries, documents):
-    """Computes embeddings for queries and documents using the given model."""
+    """Computes embeddings for queries and documents using the given model.
+
+    Args:
+        model: EmbeddingModel object.  (EmbeddingModel)
+        queries: list of queries.   (list of strings)
+        documents: list of documents.   (list of strings)
+    """
     query_embeddings = model.encode(queries)
     document_embeddings = model.encode(documents)
     return query_embeddings, document_embeddings
@@ -74,7 +80,6 @@ class Performance:
         """
         Computes the counts of elements smaller than the diagonal for the given model.
         :param model: model to evaluate
-        :param k: threshold for counting the number of elements smaller than k
         :return: the counts of elements smaller than the diagonal
         """
         query_embeddings, document_embeddings = compute_embeddings(model, self.queries, self.documents)

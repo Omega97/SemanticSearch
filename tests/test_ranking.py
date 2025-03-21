@@ -47,7 +47,7 @@ def test_2(k=5):
             plt.text(i+1, counts[i] + 0.5, f'{counts[i]/n:.1%}', ha='center', va='bottom')
     plt.text(k+1, misses + 0.5, f'{misses/n:.1%}', ha='center', va='bottom')
     plt.legend()
-    plt.xlabel('Count')
+    plt.xlabel('Ranking')
     plt.ylabel('Frequency')
     plt.title(f'Performance of {model.model_name} (on {n} queries)')
     plt.show()
