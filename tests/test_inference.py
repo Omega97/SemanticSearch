@@ -1,3 +1,6 @@
+"""
+Tests the recommendation system.
+"""
 from semanticsearch.src.inference import PageRecommender
 
 
