@@ -1,11 +1,17 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import numpy as np
 import matplotlib.pyplot as plt
+from time import time
+from scipy.signal import savgol_filter
+from semanticsearch.src.embedding import EmbeddingModel
+from semanticsearch.src.training_data import TrainingData
+from semanticsearch.src.ranking import compute_recall_at_k
 
 
-class RefinementTrainer:
-    def __init__(self, Y, Y_target, L, lr=1e-3, epsilon_0=0.01):
+class Trainer:
+    def __init__(self, Y, Y_target, L, lr=1e-3, epsilon_0=0.1):
         """
         Initializes random Y and Y_target for demonstration,
         plus trainable parameters A and B.
@@ -20,7 +26,7 @@ class RefinementTrainer:
         self.A = nn.Parameter(torch.randn(self.M, L) * epsilon_0)
         self.B = nn.Parameter(torch.randn(L, self.M) * epsilon_0)
 
-        # Optimizer and loss
+        # Optimizer and loss function
         self.optimizer = optim.Adam([self.A, self.B], lr=lr)
         self.criterion = nn.MSELoss()
 
@@ -42,6 +48,7 @@ class RefinementTrainer:
 
             # Construct I + AB
             refinement_matrix = self.get_refinement_matrix()
+
             # Apply to Y
             Y_refined = self.Y @ refinement_matrix
 
@@ -56,7 +63,9 @@ class RefinementTrainer:
             self.optimizer.step()
 
             if (epoch + 1) % 100 == 0:
-                print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {loss.item():.6f}")
+                print(f"{epoch + 1:5.0f}/{num_epochs}, RMSE: {(loss.item())**.5:.6f}")
+
+        return self.get_refinement_matrix()
 
     def save_refinement_matrix(self, path):
         """
@@ -65,59 +74,114 @@ class RefinementTrainer:
         torch.save(self.get_refinement_matrix(), path)
 
 
-def test(N=2000, M=32, L=8, lambda_reg=1e-3):
+class EmbeddingTrainer:
     """
-    Evaluates the trained refinement.
+    To train the perturbation of the map between the query embedding and document embedding
+    we sweep once through the entire dataset, and we accumulate the gradient.
     """
-    # For reproducibility
-    torch.manual_seed(0)
+    def __init__(self, model_name, embedding_size, train_dir_path, test_name,
+                 batch_size=500, max_size=1000, learning_rate=1e-2):
+        self.embedding_size = embedding_size
+        self.train_dir_path = train_dir_path
+        self.test_name = test_name
+        self.batch_size = batch_size
+        self.max_size = max_size
+        self.learning_rate = learning_rate
+        self.model = EmbeddingModel(model_name)
+        self.data = None
+        self.X_test = None
+        self.Y_test = None
+        self.optimizer = None
+        self.criterion = None
+        self.train_queries = None
+        self.train_docs = None
+        self.test_queries = None
+        self.test_docs = None
+        self.n_cycles = None
+        self.perturbation = None
 
-    # Example data
-    Y = torch.randn(N, M)
-    target_mat = torch.eye(M) + 0.1 * torch.randn(M, M)
-    Y_target = Y @ target_mat
+    def prepare_data(self):
+        print('\nLoading the data...')
+        self.data = TrainingData(self.train_dir_path)
+        train_names = [name for name in self.data.get_names() if name != self.test_name]
+        self.train_queries, self.train_docs = self.data.get_queries_and_docs(*train_names)
+        self.test_queries, self.test_docs = self.data.get_queries_and_docs(self.test_name, max_size=self.max_size)
 
-    trainer = RefinementTrainer(Y, Y_target, L=L)
-    trainer.train(lambda_reg=lambda_reg)
+        print('\nGenerating the test embeddings...')
+        self.X_test = torch.tensor(self.model.encode(self.test_queries))
+        self.Y_test = torch.tensor(self.model.encode(self.test_docs))
 
-    # Get result
-    refinement_matrix = trainer.get_refinement_matrix()
+    def initialize_training(self, epsilon_0=0.001):
+        print('\nInitializing the training parameters...')
+        self.perturbation = nn.Parameter(torch.randn(self.embedding_size, self.embedding_size) * epsilon_0)
+        self.optimizer = optim.Adam([self.perturbation], lr=self.learning_rate)
+        self.criterion = nn.MSELoss()
+        self.n_cycles = len(self.train_queries) // self.batch_size
 
-    # Apply to Y
-    Y_refined = trainer.Y @ refinement_matrix
+    def evaluate_pre_training(self):
+        score_pre = compute_recall_at_k(self.X_test, self.Y_test, k=1)
+        print(f'\nPerformance before training: {score_pre:.2%}')
 
-    # print difference between Y_target and Y_refined
-    print(f"\nDifference between Y_target and Y_refined:")
-    print(f"{torch.norm(Y_target - Y_refined).item():.6f}")
+    def train(self):
+        print('\nTraining...')
 
-    # print difference between target_mat and refinement_matrix
-    print(f"Difference between target_mat and refinement_matrix:")
-    print(f"{torch.norm(target_mat - refinement_matrix).item():.6f}")
+        self.optimizer.zero_grad()  # Initialize gradients to zero outside the loop
 
-    # Check the final loss
-    loss = nn.MSELoss()(Y_refined, trainer.Y_target)
-    print(f"\nFinal loss: {loss.item():.6f}")
+        for i_cycle in range(self.n_cycles):
+            print(f'\nCycle {i_cycle + 1}/{self.n_cycles}')
 
-    # norm of the refinement matrix
-    print(f"Norm of correction matrix: {torch.norm(trainer.A @ trainer.B).item():.6f}")
+            print('\nGetting the data...')
+            i_start = i_cycle * self.batch_size
+            i_end = (i_cycle + 1) * self.batch_size
+            i_end = min(i_end, len(self.train_queries))
+            indices = range(i_start, i_end)
+            queries = self.train_queries[indices]
+            docs = self.train_docs[indices]
 
-    # plots
-    fig, ax = plt.subplots(1, 2)
+            print(f'\nGenerating the embeddings for {i_end - i_start} samples...')
+            t = time()
+            query_emb = torch.tensor(self.model.encode(queries))
+            doc_emb = torch.tensor(self.model.encode(docs))
+            t = time() - t
+            print(f'Elapsed time: {t:.1f} s')
 
-    # Plot the refinement matrix
-    plt.sca(ax[0])
-    plt.imshow(refinement_matrix.detach().numpy(), cmap='bwr', vmin=-1.1, vmax=1.1)
-    plt.title("Refinement matrix")
-    plt.colorbar()
+            loss = self.criterion(doc_emb, query_emb @ self.perturbation)
+            loss.backward()  # Accumulate gradients
 
-    # Plot the target matrix
-    plt.sca(ax[1])
-    plt.imshow(target_mat.detach().numpy(), cmap='bwr', vmin=-1.1, vmax=1.1)
-    plt.title("Target matrix")
-    plt.colorbar()
+        self.optimizer.step()  # Perform a single optimization step after all batches
 
-    plt.show()
+    def evaluate_post_training(self, n_points=30):
+        print('\nEvaluating post-training performance...')
+        _x = np.linspace(-1., 1., n_points+1)
+        _x = (_x**3 + _x)/2
+        _x *= 5
+        _y = []
+        X_test_np = self.X_test.detach().numpy()
+        Y_test_np = self.Y_test.detach().numpy()
+        mat_np = self.perturbation.detach().numpy()
+        mat_np = mat_np / np.linalg.norm(mat_np)
 
+        I = np.eye(self.embedding_size)
+        for i in range(len(_x)):
+            print(f'\r{i+1}/{len(_x)}', end='')
+            X_test_2 = X_test_np @ (I - mat_np * float(_x[i]))
+            score_post = compute_recall_at_k(X_test_2, Y_test_np, k=1)
+            _y.append(score_post)
+        print()
+        _y_smooth = savgol_filter(_y, window_length=9, polyorder=2)
+        best_x = _x[np.argmax(_y_smooth)]
+        print(f'\nBest epsilon = {best_x:.2f}')
 
-if __name__ == "__main__":
-    test()
+        plt.plot(_x, _y)
+        plt.plot(_x, _y_smooth, '--', c='k')
+        plt.xlabel('Correction matrix intensity')
+        plt.ylabel('Recall@1')
+        plt.title('Performance after training')
+        plt.show()
+
+    def run_training(self):
+        self.prepare_data()
+        self.initialize_training()
+        self.evaluate_pre_training()
+        self.train()
+        self.evaluate_post_training()

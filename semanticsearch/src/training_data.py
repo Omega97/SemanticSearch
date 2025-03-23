@@ -5,21 +5,21 @@ import csv
 import numpy as np
 
 
-def load_tsv_(filepath, delimiter='\t') -> np.ndarray:
-    """
-    Loads a TSV file into an N*2 numpy array of query-document pairs.
-    Assumes that the column names are not included in the file.
-
-    :param filepath: The path to the TSV file.
-    :param delimiter: The delimiter character used in the TSV file.
-    :return: A numpy array of query-document pairs.
-    """
-    with open(filepath, 'r', encoding='utf-8') as f:
-        reader = csv.reader(f, delimiter=delimiter)
-        data = []
-        for row in reader:
-            data.append(row)
-    return np.array(data)
+# def load_tsv_(filepath, delimiter='\t') -> np.ndarray:
+#     """
+#     Loads a TSV file into an N*2 numpy array of query-document pairs.
+#     Assumes that the column names are not included in the file.
+#
+#     :param filepath: The path to the TSV file.
+#     :param delimiter: The delimiter character used in the TSV file.
+#     :return: A numpy array of query-document pairs.
+#     """
+#     with open(filepath, 'r', encoding='utf-8') as f:
+#         reader = csv.reader(f, delimiter=delimiter)
+#         data = []
+#         for row in reader:
+#             data.append(row)
+#     return np.array(data)
 
 
 def load_tsv(filepath, delimiter='\t') -> np.ndarray:
@@ -72,8 +72,32 @@ class TrainingData:
         """returns the names of the data files"""
         return tuple(self.data.keys())
 
-    def get_queries_and_docs(self, name):
-        """returns the queries and documents from the specified data file"""
-        queries = self.data[name][:, 0]
-        docs = self.data[name][:, 1]
+    def get_queries_and_docs(self, *names, shuffle=True, max_size=None):
+        """
+        Returns the queries and documents from the specified data files
+        in a shuffled order, and in the specified size.
+        """
+        queries = np.empty(0)
+        docs = np.empty(0)
+
+        # Concatenate the queries and documents from the specified data files
+        for name in names:
+            if name in self.data:
+                data = self.data[name]
+                queries = np.append(queries, data[:, 0])
+                docs = np.append(docs, data[:, 1])
+            else:
+                print(f"Error: {name} not found in data directory.")
+
+        # Shuffle the data
+        if shuffle:
+            indices = np.random.permutation(len(queries))
+            queries = queries[indices]
+            docs = docs[indices]
+
+        # Limit the size of the data
+        if max_size is not None:
+            queries = queries[:max_size]
+            docs = docs[:max_size]
+
         return queries, docs
