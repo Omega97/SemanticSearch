@@ -53,13 +53,13 @@ class EmbeddingModelWithCorrection(EmbeddingModel):
     The EmbeddingModelWithCorrection class is used to convert text inputs into
     vector embeddings, and apply a correction matrix to the embeddings.
     """
-    def __init__(self, correction_matrix, model_name="all-MiniLM-L6-v2"):
+    def __init__(self, model_name, correction_matrix):
         """
         Initialize the embedding model with a correction matrix.
 
         Args:
-            correction_matrix (np.ndarray): A correction matrix to apply to the embeddings.
             model_name (str): The name of the SentenceTransformer model to use.
+            correction_matrix (np.ndarray): A correction matrix to apply to the embeddings.
         """
         super().__init__(model_name)
         self.correction_matrix = correction_matrix
