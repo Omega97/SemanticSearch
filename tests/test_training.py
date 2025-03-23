@@ -120,7 +120,7 @@ def test_training(train_dir_path='..\\data\\training_dataset', test_name='golden
 
 def test_training_2(train_dir_path='..\\data\\training_dataset',
                     test_name='golden_answer',
-                    batch_size=500, max_size=1000):
+                    batch_size=500, max_size=500):
     """
     Tests the training
     Y = X @ (I + mat)
@@ -215,9 +215,9 @@ def run_training():
     trainer = EmbeddingTrainer(model_name="all-MiniLM-L6-v2",
                                embedding_size=384,
                                train_dir_path='..\\data\\training_dataset',
-                               test_name='', # wikiqa_2224
-                               batch_size=700,
-                               max_size=1000)
+                               test_name='wikiqa_2224', # yahoo_train_2001, wikiqa_2224
+                               batch_size=500,
+                               max_size=600)
     trainer.run_training()
 
 
