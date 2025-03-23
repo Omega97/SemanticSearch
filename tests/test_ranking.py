@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from semanticsearch.src.ranking import count_smaller_than_diagonal, Performance
+from semanticsearch.src.ranking import count_smaller_than_diagonal, PerformanceEvaluator
 from semanticsearch.src.training_data import TrainingData
 from semanticsearch.src.embedding import EmbeddingModel
 
@@ -18,7 +18,7 @@ def test_count():
     print(np.median(result))
 
 
-def test_performance(doc_id=4, k=5):
+def test_performance(doc_id=0, k=5):
     # Load the training data
     training_data = TrainingData('..\\data\\training_dataset')
     names = training_data.get_names()
@@ -26,7 +26,7 @@ def test_performance(doc_id=4, k=5):
 
     print('\nDocuments:')
     print('\n'.join(names))
-    print(f'\nPulling data from {name}')
+    print(f'\nPulling data from {name}...')
     queries, documents = training_data.get_queries_and_docs(name)
 
     # Initialize the embedding model
@@ -35,7 +35,7 @@ def test_performance(doc_id=4, k=5):
     print('\nComputing performance...')
 
     # Compute the performance of the model
-    performance = Performance(queries, documents, max_length=1000)
+    performance = PerformanceEvaluator(queries, documents, max_length=1000)
     n = performance.get_n_queries()
     c = performance.compute_counts(model)
     counts = [np.sum(c == i) for i in range(k)]

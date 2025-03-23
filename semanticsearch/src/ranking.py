@@ -1,3 +1,4 @@
+import torch
 import numpy as np
 from semanticsearch.src.embedding import EmbeddingModel
 
@@ -32,9 +33,15 @@ def count_smaller_than_diagonal(A, B):
     return counts
 
 
-def mean_score(counts, k=3):
+def recall_at_k(counts, k=1):
     """Returns the frequency of when the count is less than or equal to k."""
     return np.mean(counts <= k)
+
+
+def compute_recall_at_k(A, B, k=1):
+    """Computes the recall@k for the given arrays A and B."""
+    counts = count_smaller_than_diagonal(A, B)
+    return recall_at_k(counts, k)
 
 
 def compute_embeddings(model: EmbeddingModel, queries, documents):
@@ -45,24 +52,24 @@ def compute_embeddings(model: EmbeddingModel, queries, documents):
         queries: list of queries.   (list of strings)
         documents: list of documents.   (list of strings)
     """
-    query_embeddings = model.encode(queries)
-    document_embeddings = model.encode(documents)
+    query_embeddings = torch.tensor(model.encode(queries))
+    document_embeddings = torch.tensor(model.encode(documents))
     return query_embeddings, document_embeddings
 
 
-class Performance:
+class PerformanceEvaluator:
     """
     This class is used to compute the performance of a model on a set of queries
     and documents. The performance is measured by counting how many elements in
     each row of the distance matrix are strictly smaller than the corresponding
     diagonal element.
     """
-    def __init__(self, queries, documents, score_counts=mean_score, max_length=None):
+    def __init__(self, queries, documents, score_counts=recall_at_k, max_length=None):
         """
         Initializes the Performance object with the given queries, documents,
         and score_counts function.
-        :param queries: list of queries
-        :param documents: list of documents
+        :param queries: np.ndarray list of queries
+        :param documents: np.ndarray list of documents
         :param score_counts: function that computes the performance score. Takes as
             input a list of counts and an integer k, and returns the frequency of when
             the count is less than or equal to k.
@@ -75,6 +82,27 @@ class Performance:
         if max_length is not None:
             self.queries = self.queries[:max_length]
             self.documents = self.documents[:max_length]
+        self.query_embeddings = None
+        self.document_embeddings = None
+
+    def set_embeddings(self, query_embeddings, document_embeddings):
+        """Sets the query and document embeddings."""
+        self.query_embeddings = query_embeddings
+        self.document_embeddings = document_embeddings
+
+    def compute_embeddings(self, model):
+        """
+        Computes the embeddings for the queries and documents using the given model.
+        :param model: model to evaluate
+        """
+        query_embeddings, document_embeddings = compute_embeddings(model, self.queries, self.documents)
+        self.set_embeddings(query_embeddings, document_embeddings)
+
+    def get_embeddings(self):
+        """Returns the query and document embeddings."""
+        if self.query_embeddings is None or self.document_embeddings is None:
+            raise ValueError('Embeddings have not been computed yet.')
+        return self.query_embeddings, self.document_embeddings
 
     def compute_counts(self, model):
         """
@@ -82,10 +110,11 @@ class Performance:
         :param model: model to evaluate
         :return: the counts of elements smaller than the diagonal
         """
-        query_embeddings, document_embeddings = compute_embeddings(model, self.queries, self.documents)
-        return count_smaller_than_diagonal(query_embeddings, document_embeddings)
+        if self.query_embeddings is None or self.document_embeddings is None:
+            self.compute_embeddings(model)
+        return count_smaller_than_diagonal(self.query_embeddings, self.document_embeddings)
 
-    def compute_score(self, model, k=3):
+    def compute_score(self, model, k=1):
         """
         Computes the performance of the given model on the queries and documents.
         :param model: model to evaluate
