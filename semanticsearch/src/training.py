@@ -87,6 +87,7 @@ class EmbeddingTrainer:
         self.batch_size = batch_size
         self.max_size = max_size
         self.learning_rate = learning_rate
+        print('Loading model...')
         self.model = EmbeddingModel(model_name)
         self.data = None
         self.X_test = None
@@ -135,8 +136,8 @@ class EmbeddingTrainer:
             i_end = (i_cycle + 1) * self.batch_size
             i_end = min(i_end, len(self.train_queries))
             indices = range(i_start, i_end)
-            queries = self.train_queries[indices]
-            docs = self.train_docs[indices]
+            queries = [self.train_queries[i] for i in indices]
+            docs = [self.train_docs[i] for i in indices]
 
             print(f'\nGenerating the embeddings for {i_end - i_start} samples...')
             t = time()
@@ -150,7 +151,7 @@ class EmbeddingTrainer:
 
         self.optimizer.step()  # Perform a single optimization step after all batches
 
-    def evaluate_post_training(self, n_points=30):
+    def evaluate_post_training(self, n_points=35):
         print('\nEvaluating post-training performance...')
         _x = np.linspace(-1., 1., n_points+1)
         _x = (_x**3 + _x)/2
