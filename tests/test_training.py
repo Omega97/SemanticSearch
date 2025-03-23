@@ -215,7 +215,7 @@ def run_training():
     trainer = EmbeddingTrainer(model_name="all-MiniLM-L6-v2",
                                embedding_size=384,
                                train_dir_path='..\\data\\training_dataset',
-                               test_name='yahoo_train2000', # golden_answer
+                               test_name='', # wikiqa_2224
                                batch_size=700,
                                max_size=1000)
     trainer.run_training()
