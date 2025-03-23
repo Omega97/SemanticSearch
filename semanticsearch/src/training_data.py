@@ -77,23 +77,23 @@ class TrainingData:
         Returns the queries and documents from the specified data files
         in a shuffled order, and in the specified size.
         """
-        queries = np.empty(0)
-        docs = np.empty(0)
+        queries = []
+        docs = []
 
         # Concatenate the queries and documents from the specified data files
         for name in names:
             if name in self.data:
                 data = self.data[name]
-                queries = np.append(queries, data[:, 0])
-                docs = np.append(docs, data[:, 1])
+                queries.extend(data[:, 0])
+                docs.extend(data[:, 1])
             else:
                 print(f"Error: {name} not found in data directory.")
 
         # Shuffle the data
         if shuffle:
             indices = np.random.permutation(len(queries))
-            queries = queries[indices]
-            docs = docs[indices]
+            queries = [queries[i] for i in indices]
+            docs = [docs[i] for i in indices]
 
         # Limit the size of the data
         if max_size is not None:
