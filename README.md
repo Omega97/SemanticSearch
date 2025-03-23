@@ -32,6 +32,14 @@ tasks, including document and passage retrieval.
 used to benchmark dense retrieval models.
 4) **TREC** Datasets (Web & Enterprise Retrieval), A series of datasets designed for various retrieval tasks, 
 including ad-hoc search, enterprise search, and web retrieval
+- stack overflow
+- titolo e resto dell'essay
+- 
+
+## Datasets:
+- [WikiQA](https://www.kaggle.com/datasets/saurabhshahane/wikiqa-corpus)
+- [Yahoo]()
+- [MS MARCO](https://www.kaggle.com/datasets/parthplc/ms-marco-dataset) dataset with queries taken from Bing and as documents passages from the answering website (not wikipedia in general)
 
 
 >## Performance
