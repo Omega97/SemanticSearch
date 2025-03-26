@@ -216,9 +216,9 @@ def run_training():
                                embedding_size=384,
                                train_dir_path='..\\data\\training_dataset',
                                test_name='question_golden_answer_5560', # wikiqa_2223
-                               batch_size=500,
-                               max_size=900,
-                               max_n_cycles=None)
+                               batch_size=300,  
+                               max_size=300,    # number of data points for the plot
+                               max_n_cycles=2)  # None for max cycles
     trainer.run_training()
 
 
