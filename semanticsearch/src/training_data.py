@@ -64,6 +64,7 @@ class TrainingData:
             if file.endswith('.tsv'):
                 key = file.split('.')[0]
                 try:
+                    print(f'Loading {key}')
                     self.data[key] = load_tsv(os.path.join(self.data_dir, file))
                 except csv.Error as e:
                     print(f"\nError {e} with file {file}")
