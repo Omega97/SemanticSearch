@@ -80,15 +80,17 @@ class EmbeddingTrainer:
     we sweep once through the entire dataset, and we accumulate the gradient.
     """
     def __init__(self, model_name, embedding_size, train_dir_path, test_name,
-                 batch_size=500, max_size=1000, learning_rate=1e-2):
+                 batch_size=500, max_size=1000, learning_rate=1e-2, max_n_cycles=None):
+        self.model_name = model_name
         self.embedding_size = embedding_size
         self.train_dir_path = train_dir_path
         self.test_name = test_name
         self.batch_size = batch_size
         self.max_size = max_size
         self.learning_rate = learning_rate
-        print('Loading model...')
-        self.model = EmbeddingModel(model_name)
+        self.max_n_cycles = max_n_cycles
+
+        self.model = None
         self.data = None
         self.X_test = None
         self.Y_test = None
@@ -101,6 +103,12 @@ class EmbeddingTrainer:
         self.n_cycles = None
         self.perturbation = None
 
+        self._load_model()
+
+    def _load_model(self):
+        print('Loading model...')
+        self.model = EmbeddingModel(self.model_name)
+
     def prepare_data(self):
         print('\nLoading the data...')
         self.data = TrainingData(self.train_dir_path)
@@ -112,12 +120,25 @@ class EmbeddingTrainer:
         self.X_test = torch.tensor(self.model.encode(self.test_queries))
         self.Y_test = torch.tensor(self.model.encode(self.test_docs))
 
+    def get_refinement_matrix(self, epsilon):
+        """This matrix converts an embedding vector in query space to document space"""
+        return np.eye(len(self.perturbation_np)) + epsilon * self.perturbation_np
+
+    def save_refinement_matrix(self, path, epsilon):
+        """
+        Saves the refinement matrix to the given path.
+        """
+        torch.save(self.get_refinement_matrix(epsilon), path)
+
     def initialize_training(self, epsilon_0=0.001):
         print('\nInitializing the training parameters...')
         self.perturbation = nn.Parameter(torch.randn(self.embedding_size, self.embedding_size) * epsilon_0)
-        self.optimizer = optim.Adam([self.perturbation], lr=self.learning_rate)
+        self.optimizer = optim.SGD([self.perturbation], lr=self.learning_rate)
         self.criterion = nn.MSELoss()
-        self.n_cycles = len(self.train_queries) // self.batch_size
+        if self.max_n_cycles is None:
+            self.n_cycles = len(self.train_queries) // self.batch_size
+        else:
+            self.n_cycles = self.max_n_cycles
 
     def evaluate_pre_training(self):
         score_pre = compute_recall_at_k(self.X_test, self.Y_test, k=1)
@@ -141,15 +162,21 @@ class EmbeddingTrainer:
 
             print(f'\nGenerating the embeddings for {i_end - i_start} samples...')
             t = time()
-            query_emb = torch.tensor(self.model.encode(queries))
-            doc_emb = torch.tensor(self.model.encode(docs))
+            X = torch.tensor(self.model.encode(queries))
+            Y_true = torch.tensor(self.model.encode(docs))
             t = time() - t
             print(f'Elapsed time: {t:.1f} s')
 
-            loss = self.criterion(doc_emb, query_emb @ self.perturbation)
+            Y = X + X @ self.perturbation
+            loss = self.criterion(Y, Y_true)
+
             loss.backward()  # Accumulate gradients
 
         self.optimizer.step()  # Perform a single optimization step after all batches
+
+        # normalize perturbation
+        self.perturbation_np = self.perturbation.detach().numpy()
+        self.perturbation_np /= np.linalg.norm(self.perturbation_np)
 
     def evaluate_post_training(self, n_points=35):
         print('\nEvaluating post-training performance...')
@@ -159,13 +186,11 @@ class EmbeddingTrainer:
         _y = []
         X_test_np = self.X_test.detach().numpy()
         Y_test_np = self.Y_test.detach().numpy()
-        mat_np = self.perturbation.detach().numpy()
-        mat_np = mat_np / np.linalg.norm(mat_np)
 
-        I = np.eye(self.embedding_size)
         for i in range(len(_x)):
             print(f'\r{i+1}/{len(_x)}', end='')
-            X_test_2 = X_test_np @ (I - mat_np * float(_x[i]))
+            mat = self.get_refinement_matrix(epsilon=float(_x[i]))
+            X_test_2 = X_test_np @ mat
             score_post = compute_recall_at_k(X_test_2, Y_test_np, k=1)
             _y.append(score_post)
         print()

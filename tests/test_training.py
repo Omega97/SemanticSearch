@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import time
 from semanticsearch.src.training import Trainer, EmbeddingTrainer
-from semanticsearch.src.embedding import EmbeddingModel, EmbeddingModelWithCorrection
+from semanticsearch.src.embedding import EmbeddingModel
 from semanticsearch.src.training_data import TrainingData
 from semanticsearch.src.ranking import compute_recall_at_k
 
@@ -215,9 +215,10 @@ def run_training():
     trainer = EmbeddingTrainer(model_name="all-MiniLM-L6-v2",
                                embedding_size=384,
                                train_dir_path='..\\data\\training_dataset',
-                               test_name='wikiqa_2224', # yahoo_train_2001, wikiqa_2224
+                               test_name='question_golden_answer_5560', # wikiqa_2223
                                batch_size=500,
-                               max_size=600)
+                               max_size=900,
+                               max_n_cycles=None)
     trainer.run_training()
 
 
