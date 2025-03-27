@@ -24,17 +24,26 @@ class PageRecommender:
         :param emb_file: Path to the stored embeddings file (a .json file).
         :param k: Number of recommendations to return.
         """
-        print('Loading database...')
-        self.db = Database(data_path)
-        print('Loading model...')
-        self.emb_model = EmbeddingModel()
+        self.data_path = data_path
         self.emb_file = emb_file
         self.k = k
-        print('Preprocessing...')
-        self.preprocessing()
+        self.db = None
+        self.emb_model = None
+        self._load_database()
+        self._load_emb_model()
+        self._preprocessing()
 
-    def preprocessing(self):
+    def _load_database(self):
+        print('Loading database...')
+        self.db = Database(self.data_path)
+
+    def _load_emb_model(self):
+        print('Loading model...')
+        self.emb_model = EmbeddingModel()
+
+    def _preprocessing(self):
         """Compute embeddings if needed"""
+        print('Preprocessing...')
         compute_embeddings(self.db, self.emb_model, self.emb_file)
 
     def get_document(self, file_name):
