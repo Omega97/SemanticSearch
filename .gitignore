@@ -165,3 +165,4 @@ cython_debug/
 
 # mine
 prove.ipynb
+images_embeddings.ipynb
