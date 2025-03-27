@@ -54,7 +54,9 @@ def test_performance(doc_id=0, k=5):
     plt.legend()
     plt.xlabel('Recall@n')
     plt.ylabel('Frequency')
-    plt.ylim(0, max(counts) * 1.1)
+    y_max = max(counts)
+    y_max = max(y_max, misses)
+    plt.ylim(0, y_max * 1.1)
     plt.xticks(range(1, k+2), [f'{i}' for i in range(1, k+1)] + [f'{k+1}+'])
 
     plt.title(f'Performance of {model.model_name} (on {n} queries)')
