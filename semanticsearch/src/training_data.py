@@ -22,7 +22,7 @@ import numpy as np
 #     return np.array(data)
 
 
-def load_tsv(filepath, delimiter='\t') -> np.ndarray:
+def load_tsv_(filepath, delimiter='\t') -> np.ndarray:
     """
     Loads a TSV file into an N*2 numpy array of query-document pairs.
     Assumes that the column names are not included in the file.
@@ -49,6 +49,41 @@ def load_tsv(filepath, delimiter='\t') -> np.ndarray:
                 f.readline()
                 continue
     return np.array(data)
+
+
+def load_tsv(filepath, delimiter='\t', n_cols=2):
+    """
+    Loads a TSV file with a specified number of columns into separate lists.
+    Skips malformed lines and warns on CSV errors.
+
+    :param filepath: The path to the TSV file.
+    :param delimiter: The delimiter character used in the TSV file.
+    :param n_cols: Expected number of columns per row.
+    :return: A tuple of lists, one for each column.
+    """
+    columns = [[] for _ in range(n_cols)]
+    line_index = 0
+    with open(filepath, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f, delimiter=delimiter)
+        while True:
+            line_index += 1
+            try:
+                row = next(reader)
+                if len(row) != n_cols:
+                    print(f"Warning: Skipping malformed line {line_index} in {filepath} "
+                          f"(expected {n_cols} columns, got {len(row)}).")
+                    continue
+                for i in range(n_cols):
+                    columns[i].append(row[i])
+            except StopIteration:
+                break
+            except csv.Error as e:
+                print(f"Warning: CSV error in file {filepath} on line {line_index}: {e}. Skipping.")
+                f.readline()
+                continue
+    return tuple(columns)
+
+
 
 
 class TrainingData:

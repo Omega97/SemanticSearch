@@ -1,3 +1,4 @@
+import os.path
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -5,8 +6,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import time
 from scipy.signal import savgol_filter
+from typing import List
 from semanticsearch.src.embedding import EmbeddingModel
-from semanticsearch.src.training_data import TrainingData
+from semanticsearch.src.training_data import TrainingData, load_tsv
 from semanticsearch.src.ranking import compute_recall_at_k
 
 
@@ -178,7 +180,7 @@ class EmbeddingTrainer:
         self.perturbation_np = self.perturbation.detach().numpy()
         self.perturbation_np /= np.linalg.norm(self.perturbation_np)
 
-    def evaluate_post_training(self, n_points=35):
+    def evaluate_post_training(self, n_points=31):
         print('\nEvaluating post-training performance...')
         _x = np.linspace(-1., 1., n_points+1)
         _x = (_x**3 + _x)/2
@@ -211,3 +213,135 @@ class EmbeddingTrainer:
         self.evaluate_pre_training()
         self.train()
         self.evaluate_post_training()
+
+
+class EmbeddingTrainer_v2:
+    def __init__(self, model, data_dir_path, embedding_path, matrix_path,
+                 lr=0.1, epsilon_0=1e-3, reg=1e-3):
+        """
+        Initializes random Y and Y_target for demonstration,
+        plus trainable parameters A and B.
+        """
+        self.model = model
+        self.data_dir_path = data_dir_path
+        self.embedding_path = embedding_path
+        self.matrix_path = matrix_path
+        self.lr = lr
+        self.epsilon_0 = epsilon_0
+        self.reg = reg
+
+        # load embeddings
+        self.query_embeddings = None
+        self.doc_embeddings = None
+        self._load_embeddings()
+
+        # Trainable low-rank update parameters
+        self.A = None
+        self._load_matrix()
+
+        # Optimizer and loss function
+        self.optimizer = optim.Adam(self.get_matrices(), lr=lr)
+        self.criterion = nn.MSELoss()
+
+    def get_matrices(self) -> List[torch.Tensor]:
+        """Return the components of the refinement matrix."""
+        return [self.A]
+
+    def get_refinement_matrix(self) -> torch.Tensor:
+        """Returns the refinement matrix."""
+        return self.A
+
+    def train(self, n_cycles=1000, reg_lambda=1e-3):
+        """
+        Training loop with MSE + regularization to keep A small.
+        """
+        for i in range(n_cycles):
+            self.optimizer.zero_grad()
+
+            # Construct model
+            refinement_matrix = self.get_refinement_matrix()
+
+            # Compute output
+            new_doc_embeddings = self.query_embeddings @ refinement_matrix
+
+            # Compute main loss
+            mse_loss = self.criterion(new_doc_embeddings, self.doc_embeddings)
+            reg_loss = reg_lambda * torch.norm(self.A, p=2)
+            total_loss = mse_loss + reg_loss
+            total_loss.backward()
+
+            # Update self.A
+            self.optimizer.step()
+
+            # Optional: Print loss for monitoring
+            if (i + 1) % 10 == 0:
+                print(f"Cycle {i + 1}/{n_cycles}, "
+                      f"MSE Loss: {mse_loss.item()}, "
+                      f"Reg Loss: {reg_loss.item()}, "
+                      f"Total Loss: {total_loss.item()}")
+
+        # save
+        self.save_matrix()
+        return self.get_refinement_matrix()
+
+    def compute_embeddings(self, batch_size=300):
+        """Compute embeddings"""
+        print('Computing embeddings...')
+        files = [name for name in os.listdir(self.data_dir_path) if name.endswith('tsv')]
+        files = ['papers_dataset_924.tsv']
+
+        text_queries = []
+        text_docs = []
+        for file in files:
+            data = load_tsv(file)
+            queries = data[:, 0]
+            docs = data[:, 1]
+
+
+        rows = len(text_queries)
+        results = []
+        for i in range(0, rows, batch_size):
+            print(f'{i:4}/{rows}')
+            batch = self.query_embeddings[i:i + batch_size]
+            result = self.model.encode(batch)
+            results.append(result)
+        return torch.cat(results, dim=0)  # Concatenates the results along the 0th dimension.
+
+    def save_embeddings(self):
+        assert self.embedding_path.endswith('.pt')
+        data = {'query_embeddings': self.query_embeddings,
+                'doc_embeddings': self.doc_embeddings}
+        torch.save(data, self.embedding_path)
+
+    def _load_embeddings(self):
+        assert self.embedding_path.endswith('.pt')
+        if os.path.exists(self.embedding_path):
+            data = torch.load(self.embedding_path)
+            self.query_embeddings = data['query_embeddings']
+            self.doc_embeddings = data['doc_embeddings']
+        else:
+            self.compute_embeddings()
+            self.save_embeddings()
+
+    def save_matrix(self):
+        """ Saves the refinement matrix to the given path. """
+        assert self.matrix_path.endswith('.pt')
+        data = {'matrix_A': self.A}
+        torch.save(data, self.matrix_path)
+
+    def get_embedding_dim(self):
+        assert self.query_embeddings is not None
+        return self.query_embeddings.shape[1]
+
+    def reset_matrix(self, mat: torch.Tensor):
+        self.A = mat
+
+    def _load_matrix(self):
+        assert self.matrix_path.endswith('.pt')
+        if os.path.exists(self.matrix_path):
+            data = torch.load(self.matrix_path)
+            self.A = data['matrix_A']
+        else:
+            m = self.get_embedding_dim()
+            mat = nn.Parameter(torch.randn(m, m) * self.epsilon_0)
+            self.reset_matrix(mat)

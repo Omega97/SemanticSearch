@@ -42,7 +42,7 @@ class SemanticSearchApp:
         # Fetch and display the top document text in chunks
         file_name = recommendations[0]
         doc = self.pr.get_document(file_name)
-        self.output_box.insert(tk.END, "\n")
+        self.output_box.insert(tk.END, f"\n{recommendations[0]}\n\n")
         self.output_box.insert(tk.END, f"{pprint(doc[:self.max_text_length], self.width)}\n")
         other = '\n'.join(recommendations[1:])
         self.output_box.insert(tk.END, f"\nSee also:\n{other}")

@@ -4,13 +4,13 @@ import torch.optim as optim
 import numpy as np
 import matplotlib.pyplot as plt
 from time import time
-from semanticsearch.src.training import Trainer, EmbeddingTrainer
+from semanticsearch.src.training import Trainer, EmbeddingTrainer, EmbeddingTrainer_v2
 from semanticsearch.src.embedding import EmbeddingModel
 from semanticsearch.src.training_data import TrainingData
 from semanticsearch.src.ranking import compute_recall_at_k
 
 
-def test(N=2000, M=32, L=8, lambda_reg=1e-3):
+def test_trainer(N=2000, M=32, L=8, lambda_reg=1e-3):
     """
     Evaluates the trained refinement.
     """
@@ -66,9 +66,7 @@ def test(N=2000, M=32, L=8, lambda_reg=1e-3):
 
 def test_training(train_dir_path='..\\data\\training_dataset', test_name='golden_answer',
                   hidden_dims=8, lambda_reg=1e-3, max_size=1000):
-    """
-    Tests the training of the RefinementTrainer.
-    """
+    """ Tests the training of the RefinementTrainer. """
     fig, ax = plt.subplots(ncols=2)
 
     # load the data
@@ -102,9 +100,6 @@ def test_training(train_dir_path='..\\data\\training_dataset', test_name='golden
     correction_matrix = correction_matrix.detach().numpy()
 
     # evaluate post-training performance
-    # new_model = EmbeddingModelWithCorrection(model.model_name, correction_matrix)
-    # X_test_2 = torch.tensor(new_model.encode(test_queries))
-    # Y_test_2 = torch.tensor(new_model.encode(test_docs))
     X_test_2 = X_test @ torch.tensor(correction_matrix)
     Y_test_2 = Y_test @ torch.tensor(correction_matrix)
     score_post = compute_recall_at_k(X_test_2, Y_test_2, k=1)
@@ -216,14 +211,37 @@ def run_training():
                                embedding_size=384,
                                train_dir_path='..\\data\\training_dataset',
                                test_name='question_golden_answer_5560', # wikiqa_2223
-                               batch_size=300,  
-                               max_size=300,    # number of data points for the plot
-                               max_n_cycles=2)  # None for max cycles
+                               batch_size=300,
+                               max_size=500,    # number of data points for the plot
+                               max_n_cycles=5)  # None for max cycles
     trainer.run_training()
+
+
+def test_trainer_2(data_dir_path='..\\data\\training_dataset',
+                   embedding_path='..\\data\\train_embedding.json',
+                   matrix_path='..\\data\\train_matrix.pt'):
+    """
+    Evaluates the trained refinement.
+    """
+    # For reproducibility
+    torch.manual_seed(0)
+
+    # load the model
+    model = EmbeddingModel()
+
+    # training
+    trainer = EmbeddingTrainer_v2(model,
+                                  data_dir_path, embedding_path, matrix_path,
+                                  lr=0.1, epsilon_0=1e-3, reg=1e-3)
+    trainer.train(n_cycles=1000, reg_lambda=1e-3)
+
+    A = trainer.get_refinement_matrix()
+
 
 
 if __name__ == "__main__":
     # test()
     # test_training()
     # test_training_2()
-    run_training()
+    # run_training()
+    test_trainer_2()

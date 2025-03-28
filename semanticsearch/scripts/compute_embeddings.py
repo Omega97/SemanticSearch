@@ -3,9 +3,8 @@ import json
 
 
 def compute_embeddings(database, embedding_model, embeddings_file):
-    # Step 1: Initialize the database and embedding model
 
-    # Step 2: List all the documents that require embeddings
+    # List all the documents that require embeddings
     existing_embeddings = {}
 
     # Check if embeddings already exist to avoid recomputing them
@@ -18,10 +17,10 @@ def compute_embeddings(database, embedding_model, embeddings_file):
     # Filter out documents that already have embeddings
     documents_to_embed = [doc for doc in database.documents if doc not in existing_embeddings]
 
-    # Step 3: Compute embeddings for documents that need them
+    # Compute embeddings for documents that need them
     embeddings_batch = embedding_model.encode(documents_to_embed)
 
-    # Step 4: Prepare the data for saving (file path and corresponding embeddings)
+    # Prepare the data for saving (file path and corresponding embeddings)
     new_embeddings = [
         {"file_path": doc_path, "embedding": [f"{x:.6e}" for x in embedding]}  # Convert to scientific notation
         for doc_path, embedding in zip(documents_to_embed, embeddings_batch)
