@@ -32,7 +32,7 @@ class EmbeddingModel:
         self.model_name = model_name
         self.model = SentenceTransformer(model_name)
 
-    def encode(self, texts, normalize_embeddings=True):
+    def encode(self, texts, normalize_embeddings=True) -> np.array:
         """
         Converts a list of text inputs into vector embeddings.
 
