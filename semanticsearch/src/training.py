@@ -8,6 +8,7 @@ import torch.optim as optim
 import numpy as np
 from typing import List
 from semanticsearch.src.training_data import load_tsv
+from semanticsearch.src.ranking import compute_recall_at_k
 
 
 class EmbeddingTrainer:
@@ -46,7 +47,7 @@ class EmbeddingTrainer:
             self._load_embeddings()
 
         # Trainable low-rank update parameters
-        self.A = None
+        self.matrix = None
         self.reset_matrix()
 
         # Optimizer and loss function
@@ -55,11 +56,15 @@ class EmbeddingTrainer:
 
     def get_matrices(self) -> List[torch.Tensor]:
         """Return the components of the refinement matrix."""
-        return [self.A]
+        return [self.matrix]
 
     def get_transformation_matrix(self) -> torch.Tensor:
-        """Returns the refinement matrix."""
-        return self.A
+        """Returns the refinement matrix as a Tensor."""
+        return self.matrix
+
+    def get_transformation_matrix_numpy(self) -> np.array:
+        """Returns the refinement matrix as an array."""
+        return self.matrix.detach().numpy()
 
     def train(self, n_cycles=1000, reg_lambda=1e-3):
         """ Training loop with MSE + regularization to keep A small. """
@@ -76,7 +81,7 @@ class EmbeddingTrainer:
 
             # Compute main loss
             mse_loss = self.criterion(new_doc_embeddings, self.doc_embeddings)
-            reg_loss = reg_lambda * torch.norm(self.A, p=2)
+            reg_loss = reg_lambda * torch.norm(self.matrix, p=2)
             total_loss = mse_loss + reg_loss
             total_loss.backward()
 
@@ -162,6 +167,7 @@ class EmbeddingTrainer:
         print('Loading embeddings...')
         assert self.embedding_path.endswith('.pt')
         if os.path.exists(self.embedding_path):
+            print(f' Loading from {self.embedding_path}')
             data = torch.load(self.embedding_path, weights_only=False)
             self.query_embeddings = data['query_embeddings']
             self.doc_embeddings = data['doc_embeddings']
@@ -173,7 +179,7 @@ class EmbeddingTrainer:
         """ Saves the refinement matrix to the given path. """
         print('Saving matrix...')
         assert self.matrix_path.endswith('.pt')
-        data = {'matrix_A': self.A}
+        data = {'matrix_A': self.matrix}
         torch.save(data, self.matrix_path)
 
     def get_embedding_dim(self):
@@ -183,7 +189,7 @@ class EmbeddingTrainer:
 
     def set_matrix(self, mat: torch.Tensor):
         """overwrite matrix A"""
-        self.A = mat
+        self.matrix = mat
 
     def reset_matrix(self):
         """overwrite matrix A"""
@@ -197,10 +203,22 @@ class EmbeddingTrainer:
         assert self.matrix_path.endswith('.pt')
         if os.path.exists(self.matrix_path):
             data = torch.load(self.matrix_path, weights_only=False)
-            self.A = data['matrix_A']
+            self.matrix = data['matrix_A']
         else:
             self.reset_matrix()
 
     def get_loss_values(self) -> np.array:
         assert self.loss_values is not None
         return np.array(self.loss_values)
+
+    def compute_model_performance(self, k=3):
+        A = self.query_embeddings
+        B = self.doc_embeddings
+        if self.max_lines is not None:
+            A = A[:self.max_lines]
+            B = B[:self.max_lines]
+        mat = self.get_transformation_matrix_numpy()
+        before = compute_recall_at_k(A, B, k=k)
+        after = compute_recall_at_k(A @ mat, B, k=k)
+        return {"performance_before_correction": before,
+                "performance_after_correction": after}
