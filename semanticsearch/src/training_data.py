@@ -5,23 +5,6 @@ import csv
 import numpy as np
 
 
-# def load_tsv_(filepath, delimiter='\t') -> np.ndarray:
-#     """
-#     Loads a TSV file into an N*2 numpy array of query-document pairs.
-#     Assumes that the column names are not included in the file.
-#
-#     :param filepath: The path to the TSV file.
-#     :param delimiter: The delimiter character used in the TSV file.
-#     :return: A numpy array of query-document pairs.
-#     """
-#     with open(filepath, 'r', encoding='utf-8') as f:
-#         reader = csv.reader(f, delimiter=delimiter)
-#         data = []
-#         for row in reader:
-#             data.append(row)
-#     return np.array(data)
-
-
 def load_tsv_(filepath, delimiter='\t') -> np.ndarray:
     """
     Loads a TSV file into an N*2 numpy array of query-document pairs.
@@ -82,8 +65,6 @@ def load_tsv(filepath, delimiter='\t', n_cols=2):
                 f.readline()
                 continue
     return tuple(columns)
-
-
 
 
 class TrainingData:
