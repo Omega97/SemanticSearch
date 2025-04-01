@@ -1,41 +1,70 @@
-import numpy as np
-import matplotlib.pyplot as plt
 print('Importing...')
+import numpy as np
 from semanticsearch.src.embedding import EmbeddingModel
 
 
-def test_model(path='..\\data\\raw\\Wikipedia\\Chess.txt',
-               n_words=1000, window_length=20, clim = 0.15):
+def display_colored_strings(strings, numbers,
+                            foreground_rgb=(0, 200, 0),
+                            background_rgb=(40, 40, 20)):
+    """
+    Displays strings with background colors based on associated numbers.
+
+    Args:
+        strings: A list of strings.
+        numbers: A list of numbers (floats) between 0 and 1, with the same length as strings.
+        foreground_rgb: color of the foreground
+        background_rgb: color of the background
+    """
+
+    if len(strings) != len(numbers):
+        raise ValueError("Strings and numbers lists must have the same length.")
+
+    rbg_0 = np.array(foreground_rgb)
+    rbg_1 = np.array(background_rgb)
+
+    for i in range(len(strings)):
+        string = strings[i]
+        number = numbers[i]
+
+        # Calculate RGB values for the color
+        rgb = rbg_1 + number * (rbg_0 - rbg_1)
+        red = int(rgb[0])
+        green = int(rgb[1])
+        blue = int(rgb[2])
+
+        # Display the string with the calculated background color.
+        print(f"\033[48;2;{red};{green};{blue}m{string}\033[0m")
+
+
+def test_model(query, path, subtract=None):
     print('Loading model...')
     model = EmbeddingModel()
 
     print('Computing...')
     with open(path, 'r', encoding='utf-8') as f:
         text = f.read()
-    text = text.replace('\n', ' ')
 
-    words = text.split(' ')
-    words = [w for w in words[:n_words] if w]
+    strings = text.split('\n')
+    strings = [s for s in strings if s]
 
-    batch = []
-    for i in range(0, len(words), window_length):
-        w = words[i: i+window_length]
-        text = ' '.join(w)
-        batch.append(text)
+    mat = model.encode(strings)
 
-    mat = model.encode(batch)
-
-    query = "Organized chess arose in the 19th century. Chess competition today is governed internationally by FIDE"
     query_emb = model.encode([query])[0]
+
+    if subtract is not None:
+        minus_emb = np.average(model.encode(subtract), axis=0)[0]
+        query_emb -= minus_emb
 
     similarity = mat @ query_emb
     similarity -= np.average(similarity)
     similarity /= np.std(similarity)
+    similarity = np.clip(similarity, 0, 1)
 
-    for j, i in enumerate(range(0, len(words), window_length)):
-        w = words[i: i+window_length]
-        print(f'{similarity[j]:+.2f} ', " ".join(w))
+    print(f'\nSearching for: {query}\n')
+    display_colored_strings(strings, similarity)
 
 
 if __name__ == "__main__":
-    test_model()
+    test_model(query="The full story behind the invention",
+               path='..\\data\\raw\\Wikipedia\\ChatGPT.txt',
+               subtract = ["Philosophy", "Glossary", "Applications", "Approaches"])
