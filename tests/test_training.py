@@ -35,7 +35,7 @@ def test_training(train_data_dir_path='..\\data\\training_dataset',
     # Tester
     tester = EmbeddingTrainer(model,
                               test_data_dir_path, test_embedding_path, matrix_path,
-                              max_lines=500,
+                              max_lines=600,
                               do_force_recompute_embeddings=False)
     print('Computing performance...')
     print(tester.compute_model_performance())

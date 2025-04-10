@@ -3,32 +3,31 @@ import numpy as np
 from semanticsearch.src.embedding import EmbeddingModel
 
 
-def count_smaller_than_diagonal(A, B):
+def compute_counts(A, B):
     """
     Calculates the distance matrix between vectors in A and B, and counts
     how many elements in each row are strictly smaller than the corresponding
     diagonal element.
 
     Args:
-        A: numpy array (N x M matrix).
-        B: numpy array (N x M matrix).
+        A: numpy array (N x M).
+        B: numpy array (N x M).
 
     Returns:
-        A list of counts, where each count represents the number of elements
-        in the corresponding row of the distance matrix that are strictly
-        smaller than the diagonal element.
+        A float: A list of counts, where each count represents the number of elements
+            in the corresponding row of the distance matrix that are strictly
+            smaller than the diagonal element.
     """
-    # Calculate distance matrix
-    dist = np.linalg.norm(A[:, np.newaxis, :] - B[np.newaxis, :, :], axis=2)
+    N = A.shape[0]
+    counts = np.zeros(N)
 
-    # Get diagonal elements
-    diagonal = np.diagonal(dist)
-
-    # Create a boolean mask for elements smaller than the diagonal
-    mask = dist < diagonal[:, np.newaxis]
-
-    # Count the number of True values in each row of the mask
-    counts = np.sum(mask, axis=1)
+    for i in range(N):
+        # Compute distance of A[i] to each row in B
+        distances = np.linalg.norm(A[i] - B, axis=1)
+        # Diagonal element: distance between A[i] and B[i]
+        diag = distances[i]
+        # Count how many distances are strictly less than diag
+        counts[i] = np.sum(distances < diag)
 
     return counts
 
@@ -40,7 +39,7 @@ def recall_at_k(counts, k=1):
 
 def compute_recall_at_k(A, B, k=1):
     """Computes the recall@k for the given arrays A and B."""
-    counts = count_smaller_than_diagonal(A, B)
+    counts = compute_counts(A, B)
     return recall_at_k(counts, k)
 
 
@@ -64,20 +63,16 @@ class PerformanceEvaluator:
     each row of the distance matrix are strictly smaller than the corresponding
     diagonal element.
     """
-    def __init__(self, queries, documents, score_counts=recall_at_k, max_length=None):
+    def __init__(self, queries, documents, max_length=None):
         """
         Initializes the Performance object with the given queries, documents,
         and score_counts function.
         :param queries: np.ndarray list of queries
         :param documents: np.ndarray list of documents
-        :param score_counts: function that computes the performance score. Takes as
-            input a list of counts and an integer k, and returns the frequency of when
-            the count is less than or equal to k.
         :param max_length: maximum number of elements to consider in the queries and documents
         """
         self.queries = queries
         self.documents = documents
-        self.score_counts = score_counts
         self.max_length = max_length
         if max_length is not None:
             self.queries = self.queries[:max_length]
@@ -112,9 +107,9 @@ class PerformanceEvaluator:
         """
         if self.query_embeddings is None or self.document_embeddings is None:
             self.compute_embeddings(model)
-        return count_smaller_than_diagonal(self.query_embeddings, self.document_embeddings)
+        return compute_counts(self.query_embeddings, self.document_embeddings)
 
-    def compute_score(self, model, k=1):
+    def compute_recall_at_k(self, model, k=1):
         """
         Computes the performance of the given model on the queries and documents.
         :param model: model to evaluate
@@ -122,7 +117,7 @@ class PerformanceEvaluator:
         :return: the performance score
         """
         counts = self.compute_counts(model)
-        return self.score_counts(counts, k)
+        return recall_at_k(counts, k)
 
     def get_n_queries(self):
         """Returns the number of queries."""
