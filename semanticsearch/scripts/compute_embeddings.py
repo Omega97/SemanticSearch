@@ -26,10 +26,10 @@ def compute_embeddings(database, embedding_model, embeddings_file):
         for doc_path, embedding in zip(documents_to_embed, embeddings_batch)
     ]
 
-    # Step 5: Merge new embeddings with existing ones
+    # Merge new embeddings with existing ones
     existing_embeddings.update({doc['file_path']: doc['embedding'] for doc in new_embeddings})
 
-    # Step 6: Save embeddings to JSON file
+    # Save embeddings to JSON file
     with open(embeddings_file, 'w') as f:
         json.dump(existing_embeddings, f, indent=4)
 
