@@ -74,8 +74,9 @@ class SemanticSearchApp:
 
 
 def main():
+    re_ranking_system = ...
     root = tk.Tk()
-    SemanticSearchApp(root)
+    SemanticSearchApp(root, re_ranking_system=re_ranking_system)
     root.mainloop()
 
 
