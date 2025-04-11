@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import scrolledtext
 from semanticsearch.src.inference import PageRecommender
 from semanticsearch.src.misc import pprint
+from semanticsearch.src.reranking import Reranker
+from pprint import pformat
 
 
 class SemanticSearchApp:
@@ -50,13 +52,14 @@ class SemanticSearchApp:
 
         # Get recommendations
         recom_paths = self.recommender.recommend(query)
+        print(recom_paths)
 
         # Fetch best document
         if self.re_ranking_system is not None:
             # Re-ranking
             assert self.re_ranking_system is not None, 'Please provide re_ranking_system'
-            recom_docs = [path.get_document(path) for path in recom_paths]
-            best_doc = self.re_ranking_system(query, recom_docs)[0]
+            recom_docs = [self.get_document(path) for path in recom_paths]
+            best_doc = self.re_ranking_system.doc_rerank(query, recom_docs)[0]
         else:
             # No re-ranking
             file_name = recom_paths[0]
@@ -68,13 +71,13 @@ class SemanticSearchApp:
         # Reset the output widget and display the top document text in chunks
         self.output_box.delete('1.0', tk.END)
         self.output_box.insert(tk.END, f"\n{recom_paths[0]}\n\n")
-        self.output_box.insert(tk.END, f"{pprint(best_doc, self.width)}\n")
+        self.output_box.insert(tk.END, f"{pformat(best_doc, self.width)}")
         other_paths = '\n'.join(recom_paths[1:])
         self.output_box.insert(tk.END, f"\nSee also:\n{other_paths}")
 
 
 def main():
-    re_ranking_system = ...
+    re_ranking_system = Reranker()
     root = tk.Tk()
     SemanticSearchApp(root, re_ranking_system=re_ranking_system)
     root.mainloop()
