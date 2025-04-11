@@ -167,3 +167,4 @@ cython_debug/
 prove.ipynb
 images_embeddings.ipynb
 data/images
+personal_setup.ps1
