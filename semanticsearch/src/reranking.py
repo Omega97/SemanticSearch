@@ -3,19 +3,33 @@ import numpy as np
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 
-
 class Reranker:
+    """
 
-    def __init__(self, chunking_enabled: bool = False):
+    """
+    def __init__(self, chunking_enabled: bool=False, chunk_size=30, chunk_overlap=5):
+        """
+        Initialize Reranker object
+
+        :param chunking_enabled:
+        :param chunk_size: max tokens per chunk
+        :param chunk_overlap: overlap between chunks to preserve context
+        """
+        print('Loading the re-ranking model...')
         self.reranker_model = FlagReranker('BAAI/bge-reranker-large', use_fp16=True)
         self.chunking_enabled = chunking_enabled
         self.chunker = RecursiveCharacterTextSplitter(
-            chunk_size=30,      # max tokens per chunk
-            chunk_overlap=5,     # overlap between chunks to preserve context
+            chunk_size=chunk_size,
+            chunk_overlap=chunk_overlap,
         )
 
     def doc_rerank(self, query: str, top_documents: list[str], k: int | None = None) -> list[str]:
-        """Function taking in input the query string and a list of document selected with knn. Returns a permutation of the document based on a reranking model"""
+        """
+        Function taking in input the query string and a list of document
+        selected with knn. Returns a permutation of the document
+        based on a reranking model
+        """
+        print('Re-reanking...')
         k = k if k is not None else len(top_documents)
 
         if not self.chunking_enabled:
@@ -44,17 +58,7 @@ class Reranker:
 
         new_ordering = np.argsort(scores)[::-1]
         new_top_docs = [top_documents[i] for i in new_ordering]
+        top_scores = [scores[i] for i in new_ordering]
+        top_chunks = [best_chunks[i] for i in new_ordering]
 
-        return new_top_docs[:k], [scores[i] for i in new_ordering][:k], [best_chunks[i] for i in new_ordering[:k]] if 'best_chunks' in locals() else None
-    
-
-
-# text_splitter = RecursiveCharacterTextSplitter(
-# chunk_size=500,      # max tokens per chunk
-# chunk_overlap=50,     # overlap between chunks to preserve context
-# )
-
-# chunks = text_splitter.split_text(long_document)
-# for i in range(10):
-#     print(f'--------{i}---------')
-# print(chunks[i])
+        return new_top_docs[:k], top_scores[:k], top_chunks[:k] if 'best_chunks' in locals() else None

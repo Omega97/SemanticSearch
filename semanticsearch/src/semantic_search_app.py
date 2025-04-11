@@ -4,11 +4,20 @@ from pprint import pformat
 from semanticsearch.src.inference import PageRecommender
 
 
+# --- Constants ---
+DEFAULT_DATA_PATH = 'data\\raw'
+DEFAULT_EMB_FILE = 'data\\embeddings.json'
+
+
 class SemanticSearchApp:
-    def __init__(self, master, data_path='data\\raw', emb_file='data\\embeddings.json',
+    """
+    A Tkinter GUI application for performing semantic search on documents
+    and displaying the most relevant results, with optional re-ranking.
+    """
+    def __init__(self, master, data_path=DEFAULT_DATA_PATH, emb_file=DEFAULT_EMB_FILE,
                  n_pages=4, width=50, max_text_length=2000, re_ranking_system=None):
         """
-        Interface for displaying the results of the semantic retrieval system
+        Initializes the Semantic Search application interface.
 
         :param master: tk.Tk root
         :param data_path: directory with all the documents to perform retrieval on
