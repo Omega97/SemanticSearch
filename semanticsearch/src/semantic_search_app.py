@@ -41,13 +41,13 @@ class SemanticSearchApp:
         self.query_label = tk.Label(master, text="Enter your query:")
         self.query_label.pack(pady=(10, 0))
 
-        self.query_entry = tk.Entry(master, width=60)
+        self.query_entry = tk.Entry(master, width=width)
         self.query_entry.pack(pady=5)
 
         self.search_button = tk.Button(master, text="Search", command=self.run_search)
         self.search_button.pack(pady=5)
 
-        self.output_box = scrolledtext.ScrolledText(master, wrap=tk.WORD, width=60, height=20)
+        self.output_box = scrolledtext.ScrolledText(master, wrap=tk.WORD, width=width, height=20)
         self.output_box.pack(pady=10)
 
     def get_document(self, file_name: str) -> str:
@@ -66,8 +66,9 @@ class SemanticSearchApp:
         if self.re_ranking_system is not None:
             # Re-ranking
             docs_text = [self.get_document(path) for path in recom_paths]
-            reordered_docs_text = self.re_ranking_system.doc_rerank(query, docs_text)
+            reordered_docs_text = self.re_ranking_system(query, docs_text)
             best_doc = reordered_docs_text[0]
+            assert type(best_doc) is str
         else:
             # No re-ranking
             file_name = recom_paths[0]

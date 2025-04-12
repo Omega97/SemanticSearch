@@ -38,7 +38,7 @@ class PageRecommender:
         self.db = Database(self.data_path)
 
     def _load_emb_model(self):
-        print('Loading model...')
+        print('Loading embedding model...')
         self.emb_model = EmbeddingModel()
 
     def _preprocessing(self):
