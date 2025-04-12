@@ -6,7 +6,7 @@ from semanticsearch.src.reranking import Reranker
 def main():
     re_ranking_system = Reranker()
     root = tk.Tk()
-    SemanticSearchApp(root, re_ranking_system=re_ranking_system)
+    SemanticSearchApp(root, width=40, re_ranking_system=re_ranking_system)
     root.mainloop()
 
 
