@@ -49,16 +49,14 @@ class Reranker:
                 doc_chunks = self.chunker.split_text(doc)
                 doc_pairs = [[query, chunk] for chunk in doc_chunks]
                 doc_scores = np.array(self.reranker_model.compute_score(doc_pairs))
-                
+
                 # document score is best chunk score
-                score = np.max(doc_scores).item() # final score of the doc
+                score = np.max(doc_scores).item()  # final score of the doc
                 scores[i] = score
                 # save best chunk
                 best_chunks[i] = doc_chunks[np.argmax(doc_scores).item()]
 
         new_ordering = np.argsort(scores)[::-1]
         new_top_docs = [top_documents[i] for i in new_ordering]
-        top_scores = [scores[i] for i in new_ordering]
-        top_chunks = [best_chunks[i] for i in new_ordering]
 
-        return new_top_docs[:k], top_scores[:k], top_chunks[:k] if 'best_chunks' in locals() else None
+        return new_top_docs[:k], [scores[i] for i in new_ordering][:k], [best_chunks[i] for i in new_ordering[:k]] if 'best_chunks' in locals() else None
