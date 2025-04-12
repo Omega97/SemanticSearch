@@ -5,7 +5,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 class Reranker:
     """
-
+    Sorts the documents from most to least relevant wrt the query.
     """
     def __init__(self, chunking_enabled: bool=False, chunk_size=30, chunk_overlap=5):
         """
@@ -23,17 +23,16 @@ class Reranker:
             chunk_overlap=chunk_overlap,
         )
 
-    def doc_rerank(self, query: str, top_documents: list[str], k: int | None = None) -> list[str]:
+    def doc_rerank(self, query: str, top_documents: list[str]) -> dict:
         """
         Function taking in input the query string and a list of document
         selected with knn. Returns a permutation of the document
         based on a reranking model
         """
-        print('Re-reanking...')
-        k = k if k is not None else len(top_documents)
+        print(f'Re-ranking {len(top_documents)} documents...')
 
         if not self.chunking_enabled:
-            pairs = [[query, doc] for doc in top_documents]
+            pairs = [(query, doc) for doc in top_documents]
             scores = np.array(self.reranker_model.compute_score(pairs))
 
         elif self.chunking_enabled:
@@ -47,7 +46,7 @@ class Reranker:
                 # divide doc in chunks and calculate score for each chunk
                 doc = top_documents[i]
                 doc_chunks = self.chunker.split_text(doc)
-                doc_pairs = [[query, chunk] for chunk in doc_chunks]
+                doc_pairs = [(query, chunk) for chunk in doc_chunks]
                 doc_scores = np.array(self.reranker_model.compute_score(doc_pairs))
 
                 # document score is best chunk score
@@ -58,5 +57,15 @@ class Reranker:
 
         new_ordering = np.argsort(scores)[::-1]
         new_top_docs = [top_documents[i] for i in new_ordering]
+        top_scores = [scores[i] for i in new_ordering]
+        if 'best_chunks' in locals():
+            top_chunks = [best_chunks[i] for i in new_ordering]
+        else:
+            top_chunks = None
 
-        return new_top_docs[:k], [scores[i] for i in new_ordering][:k], [best_chunks[i] for i in new_ordering[:k]] if 'best_chunks' in locals() else None
+        return {'docs': new_top_docs,
+                'scores': top_scores,
+                'chunks': top_chunks}
+
+    def __call__(self, query: str, top_documents: list[str]) -> list:
+        return self.doc_rerank(query, top_documents)['docs']
