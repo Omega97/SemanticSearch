@@ -12,7 +12,7 @@ def compute_embeddings(database, embedding_model, embeddings_file):
         with open(embeddings_file, 'r') as f:
             existing_embeddings = json.load(f)
         print("Loaded existing embeddings from 'data/embeddings.json'.")
-        print(f"Documents pre-embedded: {len(existing_embeddings)}")
+        print(f"Pre-embedded documents: {len(existing_embeddings)}")
 
     # Filter out documents that already have embeddings
     documents_to_embed = [doc for doc in database.documents if doc not in existing_embeddings]

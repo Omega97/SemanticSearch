@@ -1,3 +1,5 @@
+import numpy as np
+import matplotlib.pyplot as plt
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from semanticsearch.src.reranking import Reranker
 
@@ -24,16 +26,17 @@ def test_1():
         print(f'chunk = {chunks[i]}')
 
 
-def test_2(path='..\\data\\raw\\Wikipedia\\Chess.txt',
-           chunk_size=500, chunk_overlap=50):
+def test_chunk_splitter(path='..\\data\\raw\\Wikipedia\\Chess.txt',
+                        chunk_size=2_000, chunk_overlap=0):
     """
     Test RecursiveCharacterTextSplitter
-    :param chunk_size: max tokens per chunk
+    :param chunk_size: max character per chunk
     :param chunk_overlap: overlap between chunks to preserve context
     :return:
     """
     with open(path, 'r', encoding='utf-8') as f:
         long_document = f.read()
+    # long_document = long_document[:10_000]
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
 
@@ -42,7 +45,14 @@ def test_2(path='..\\data\\raw\\Wikipedia\\Chess.txt',
         print(f'\n-------- Chunk {i} ---------')
         print(chunks[i])
 
+    lengths = np.array([len(s) for s in chunks])
+    plt.title(f'Chunk length ({len(chunks)} chunks)')
+    plt.hist(lengths)
+    plt.xlabel('length')
+    plt.xlim(0, None)
+    plt.show()
+
 
 if __name__ == '__main__':
-    test_1()
-    # test_2()
+    # test_1()
+    test_chunk_splitter()

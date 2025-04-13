@@ -55,5 +55,4 @@ def test_performance(doc_id=0, k=1):
 
 
 if __name__ == '__main__':
-    # test_count()
     test_performance()

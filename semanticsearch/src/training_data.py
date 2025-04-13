@@ -1,5 +1,5 @@
-"""This file contains a class that is used to load the training data
-from the data directory."""
+"""This file contains a class that is used
+to load the training data from the data directory."""
 import os
 import csv
 import numpy as np
