@@ -71,6 +71,13 @@ class SemanticSearchApp:
         doc = doc[:self.max_text_length]
         return doc
 
+    def print_recommended_paths(self, title=None):
+        """Print paths of recommended documents, from most to least recommended."""
+        if title:
+            print(title)
+        for path in self.recom_paths:
+            print(f'* {path}')
+
     def _do_re_ranking(self, query):
         """
         Assign best documents to self.best_doc.
@@ -83,6 +90,7 @@ class SemanticSearchApp:
 
             # Change the order of paths
             self.recom_paths = [self.recom_paths[i] for i in permutation]
+            self.print_recommended_paths('Top docs after re-ranking')
 
     def get_query(self) -> str:
         query = self.query_entry.get().strip()
@@ -99,10 +107,7 @@ class SemanticSearchApp:
     def compute_recommended_paths(self, query):
         """Get list of paths of recommended documents"""
         self.recom_paths = self.recommender.recommend(query)
-
-        print('Top docs:')
-        for path in self.recom_paths:
-            print(f' {path}')
+        self.print_recommended_paths('Top docs:')
 
     def run_search(self):
         """Interface for semantic retrieval"""
