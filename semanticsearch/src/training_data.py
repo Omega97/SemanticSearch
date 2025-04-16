@@ -72,10 +72,10 @@ class TrainingData:
         for name in names:
             if name in self.data:
                 data = self.data[name]
-                queries.extend(data[:, 0])
-                docs.extend(data[:, 1])
+                queries.extend(data[0])
+                docs.extend(data[1])
             else:
-                print(f"Error: {name} not found in data directory.")
+                raise FileNotFoundError(f"Error: {name} not found in data directory.")
 
         # Shuffle the data
         if shuffle:
