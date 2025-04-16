@@ -5,16 +5,28 @@ from semanticsearch.src.training_data import TrainingData
 from semanticsearch.src.embedding import EmbeddingModel
 
 
-def test_performance(doc_id=0, k=1):
+def test_performance(doc_name='msmarco_5001', n_columns=9, max_length=1000):
+    """
+    Test for system performance
+    Doc names:
+    * msmarco_5001
+    * wikiqa_1820
+    * question_golden_answer_5560
+    * yahoo_train_2000
+    """
     # Load the training data
     training_data = TrainingData('..\\data\\training_dataset')
     names = training_data.get_names()
-    name = names[doc_id]
+
+    if type(doc_name) is int:
+        doc_name = names[doc_name]
 
     print('\nDocuments:')
-    print('\n'.join(names))
-    print(f'\nPulling data from {name}...')
-    queries, documents = training_data.get_queries_and_docs(name)
+    for i in range(len(names)):
+        print(f'{i}) {names[i]}')
+    print(f'\nPulling data from: {doc_name}...')
+    queries, documents = training_data.get_queries_and_docs(doc_name, max_size=max_length)
+    print(f'{len(queries)} queries')
 
     # Initialize the embedding model
     model = EmbeddingModel()
@@ -22,35 +34,36 @@ def test_performance(doc_id=0, k=1):
     print('\nComputing performance...')
 
     # Compute the performance of the model
-    performance = PerformanceEvaluator(queries, documents, max_length=1000)
+    performance = PerformanceEvaluator(queries, documents)
     n = performance.get_n_queries()
-    c = performance.compute_counts(model)
-    counts = [np.sum(c == i) for i in range(k)]
-    misses = n - np.sum(counts)
+    counts = performance.compute_counts(model)
+    recall_at_k = [np.sum(counts == i) for i in range(n_columns)]
+    misses = n - np.sum(recall_at_k)
 
-    print(misses)
-    print(n - performance.compute_recall_at_k(6))
-
+    print(f'#queries = {n}')
+    print(f'recall = {recall_at_k}')
+    print(f'misses = {misses}')
     print(f'Number of queries: {n}')
 
     # Plot bar plot of counts
-    plt.bar(range(1, k+1), counts, color='blue', alpha=0.7, label='Counts')
-    plt.bar(range(k+1, k+2), [misses], color='red', alpha=0.7, label='Misses')
+    plt.bar(range(1, n_columns + 1), recall_at_k, color='blue', alpha=0.7, label='Counts')
+    plt.bar(range(n_columns + 1, n_columns + 2), [misses], color='red', alpha=0.7, label='Misses')
 
     # add text labels on the bars
-    for i in range(k):
-        if counts[i] > 0:
-            plt.text(i+1, counts[i] + 0.5, f'{counts[i]/n:.1%}', ha='center', va='bottom')
-    plt.text(k+1, misses + 0.5, f'{misses/n:.1%}', ha='center', va='bottom')
+    for i in range(n_columns):
+        if recall_at_k[i] > 0:
+            plt.text(i+1, recall_at_k[i] + 0.5, f'{recall_at_k[i]/n:.1%}', ha='center', va='bottom')
+    plt.text(n_columns + 1, misses + 0.5, f'{misses / n:.1%}', ha='center', va='bottom')
     plt.legend()
     plt.xlabel('Recall@n')
     plt.ylabel('Frequency')
-    y_max = max(counts)
+    y_max = max(recall_at_k)
     y_max = max(y_max, misses)
     plt.ylim(0, y_max * 1.1)
-    plt.xticks(range(1, k+2), [f'{i}' for i in range(1, k+1)] + [f'{k+1}+'])
+    plt.xticks(range(1, n_columns + 2), [f'{i}' for i in range(1, n_columns + 1)] + [f'{n_columns + 1}+'])
 
-    plt.title(f'Performance of {model.model_name} (on {n} queries)')
+    plt.title(f'Performance of {model.model_name}'
+              f'\n({n} queries form {doc_name})')
     plt.show()
 
 

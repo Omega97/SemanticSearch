@@ -19,7 +19,7 @@ def compute_counts(A, B):
             smaller than the diagonal element.
     """
     N = A.shape[0]
-    counts = np.zeros(N)
+    counts = np.zeros(N, dtype=int)
 
     for i in range(N):
         # Compute distance of A[i] to each row in B
@@ -63,22 +63,18 @@ class PerformanceEvaluator:
     each row of the distance matrix are strictly smaller than the corresponding
     diagonal element.
     """
-    def __init__(self, queries, documents, max_length=None):
+    def __init__(self, queries, documents):
         """
         Initializes the Performance object with the given queries, documents,
         and score_counts function.
         :param queries: np.ndarray list of queries
         :param documents: np.ndarray list of documents
-        :param max_length: maximum number of elements to consider in the queries and documents
         """
         self.queries = queries
         self.documents = documents
-        self.max_length = max_length
-        if max_length is not None:
-            self.queries = self.queries[:max_length]
-            self.documents = self.documents[:max_length]
         self.query_embeddings = None
         self.document_embeddings = None
+        self._counts = None
 
     def set_embeddings(self, query_embeddings, document_embeddings):
         """Sets the query and document embeddings."""
@@ -102,12 +98,14 @@ class PerformanceEvaluator:
     def compute_counts(self, model):
         """
         Computes the counts of elements smaller than the diagonal for the given model.
+        Forces re-compute of the self._counts variable.
         :param model: model to evaluate
         :return: the counts of elements smaller than the diagonal
         """
         if self.query_embeddings is None or self.document_embeddings is None:
             self.compute_embeddings(model)
-        return compute_counts(self.query_embeddings, self.document_embeddings)
+        self._counts = compute_counts(self.query_embeddings, self.document_embeddings)
+        return self._counts
 
     def compute_recall_at_k(self, model, k=1):
         """
@@ -116,8 +114,9 @@ class PerformanceEvaluator:
         :param k: threshold for counting the number of elements smaller than k
         :return: the performance score
         """
-        counts = self.compute_counts(model)
-        return recall_at_k(counts, k)
+        if self._counts is None:
+            self.compute_counts(model)
+        return recall_at_k(self._counts, k)
 
     def get_n_queries(self):
         """Returns the number of queries."""
