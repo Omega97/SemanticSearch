@@ -4,16 +4,15 @@ from semanticsearch.src.reranking import Reranker
 
 
 def main():
-    re_ranking_system = Reranker(chunking_enabled=False,
+    re_ranking_system = Reranker(chunking_enabled=True,
                                  chunk_size=1000,
                                  max_n_chunks=3)
-    # re_ranking_system = None
 
     root = tk.Tk()
     SemanticSearchApp(root,
                       n_pages=5,
                       width=60,
-                      re_ranking_system=re_ranking_system)
+                      re_ranking_system=None)
     root.mainloop()
 
 
