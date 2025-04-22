@@ -35,7 +35,6 @@ class SemanticSearchApp:
         self.width = width
         self.max_text_length = max_text_length
         self.re_ranking_system = re_ranking_system
-
         self.recom_paths = None
 
         # Initialize widgets

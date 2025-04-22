@@ -1,6 +1,11 @@
+""" semanticsearch/src/reranking.py
+
+Reranking model
+"""
 from FlagEmbedding import FlagReranker
 import numpy as np
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from semanticsearch.src.misc import cprint
 
 
 # ----- Default Parameters -----
@@ -11,8 +16,8 @@ class Reranker:
     """
     Sorts the documents from most to least relevant wrt the query.
     """
-    def __init__(self, chunking_enabled=False, chunk_size=1000, max_n_chunks=20,
-                 chunk_overlap=0, ranker_model_name=DEFAULT_RANKER_MODEL):
+    def __init__(self, chunking_enabled=False, chunk_size=2000, max_n_chunks=10,
+                 chunk_overlap=50, ranker_model_name=DEFAULT_RANKER_MODEL):
         """
         Initialize Reranker object
 
@@ -20,7 +25,7 @@ class Reranker:
         :param chunk_size: max characters per chunk
         :param chunk_overlap: overlap characters between chunks to preserve context
         """
-        print('Loading re-ranking model...')
+        cprint(f'Loading re-ranking model {ranker_model_name}', 'b')
         self.reranker_model = FlagReranker(ranker_model_name, use_fp16=True)
         self.chunking_enabled = chunking_enabled
         self.chunker = RecursiveCharacterTextSplitter(
@@ -97,7 +102,7 @@ class Reranker:
         selected with knn. Returns a permutation of the document
         based on a reranking model.
         """
-        print(f'Re-ranking {len(top_documents)} documents...')
+        cprint(f'Re-ranking {len(top_documents)} documents...', "b")
         self.top_docs = top_documents
 
         if not self.chunking_enabled:
