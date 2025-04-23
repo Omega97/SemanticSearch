@@ -1,3 +1,12 @@
+"""
+This Program evaluates the performance of the PC
+on PyTorch Tensor multiplication.
+
+--------- Scores ---------
+Omar's laptop:        7000
+Omar's old desktop:   5000
+
+"""
 import torch
 import time
 import matplotlib.pyplot as plt
@@ -94,6 +103,3 @@ def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=10
 if __name__ == "__main__":
     # Run performance measurement by default on GPU (if possible) with a max time of 2 seconds
     measure_performance_with_plot(device='cuda', max_time=1., size_increment=1000)
-
-    # ----- Scores -----
-    # Omar Laptop: 7000
