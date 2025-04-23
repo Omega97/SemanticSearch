@@ -2,9 +2,9 @@
 This Program evaluates the performance of the PC
 on PyTorch Tensor multiplication.
 
---------- Scores ---------
-Omar's laptop:        640
-Omar's old desktop:
+---------- Scores ----------
+Omar's laptop:          650
+Omar's old desktop:     210
 
 """
 import torch
@@ -12,7 +12,7 @@ import time
 import matplotlib.pyplot as plt
 
 
-def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=500):
+def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=200):
     # Set device to CUDA if available and requested
     if device == 'cuda' and torch.cuda.is_available():
         device = torch.device('cuda')
@@ -32,7 +32,7 @@ def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=50
     plt.ion()
     fig, ax = plt.subplots(figsize=(10, 6))
     line, = ax.plot([], [], marker='o', linestyle='-', color='b')  # Empty line object
-    ax.set_title('Matrix Multiplication Performance (Real-Time)')
+    ax.set_title(f'Matrix Multiplication Performance (Real-Time) on {device}')
     ax.set_xlabel('Tensor Size (N x N)')
     ax.set_ylabel('Execution Time (seconds)')
     ax.axhline(max_time, color='r', linestyle='--', label=f'Max Time ({max_time} s)')  # Horizontal max_time line
@@ -60,7 +60,7 @@ def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=50
         tensor_sizes.append(current_size)
         execution_times.append(elapsed_time)
 
-        print(f"Matrix multiplication ({current_size}x{current_size}) took {elapsed_time:.4f} seconds on {device}.")
+        print(f"{current_size:6} {elapsed_time:6.3f} s")
 
         # Update the plot in real-time
         line.set_xdata(tensor_sizes)  # Update the x data (tensor sizes)
@@ -75,7 +75,7 @@ def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=50
 
         # Check if we've exceeded the maximum allowed time
         if elapsed_time > max_time:
-            print(f"Time limit of {max_time} seconds reached. Stopping.")
+            print(f"\nTime limit of {max_time} seconds reached. Stopping.")
 
             # Calculate the intersection point using the last two points
             if len(tensor_sizes) >= 2:
