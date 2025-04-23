@@ -3,8 +3,8 @@ This Program evaluates the performance of the PC
 on PyTorch Tensor multiplication.
 
 --------- Scores ---------
-Omar's laptop:        7000
-Omar's old desktop:   5000
+Omar's laptop:        640
+Omar's old desktop:
 
 """
 import torch
@@ -12,7 +12,7 @@ import time
 import matplotlib.pyplot as plt
 
 
-def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=1000):
+def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=500):
     # Set device to CUDA if available and requested
     if device == 'cuda' and torch.cuda.is_available():
         device = torch.device('cuda')
@@ -48,7 +48,7 @@ def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=10
         start_time = time.time()
 
         # Perform matrix multiplication
-        result = torch.matmul(tensor_a, tensor_b)
+        _ = torch.matmul(tensor_a, tensor_b)
 
         # Synchronize in case of GPU to ensure accurate timing
         if device.type == 'cuda':
@@ -87,8 +87,12 @@ def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=10
                 b = y1 - m * x1  # Intercept
 
                 # Find x where y = max_time
-                final_score = (max_time - b) / m
-                print(f"\n\033[32m FINAL SCORE: {final_score:.0f} \033[0m")
+                max_n = (max_time - b) / m
+
+                # Find final score
+                final_score = 2 * max_n**3 / max_time
+
+                print(f"\n\033[32m FINAL SCORE: {final_score*10**(-9):.0f} GFLOPS\033[0m")
 
             break
 
@@ -102,4 +106,4 @@ def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=10
 
 if __name__ == "__main__":
     # Run performance measurement by default on GPU (if possible) with a max time of 2 seconds
-    measure_performance_with_plot(device='cuda', max_time=1., size_increment=1000)
+    measure_performance_with_plot()
