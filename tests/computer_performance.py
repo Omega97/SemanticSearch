@@ -2,7 +2,7 @@
 This Program evaluates the performance of the PC
 on PyTorch Tensor multiplication.
 
----------- Scores ----------
+----- Scores (GFLOPS) -----
 Omar's laptop:          650
 Omar's old desktop:     210
 
@@ -106,4 +106,4 @@ def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=20
 
 if __name__ == "__main__":
     # Run performance measurement by default on GPU (if possible) with a max time of 2 seconds
-    measure_performance_with_plot()
+    measure_performance_with_plot(device='cuda')
