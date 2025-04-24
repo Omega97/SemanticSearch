@@ -1,33 +1,39 @@
 from transformers import BlipProcessor, BlipForConditionalGeneration
 from PIL import Image
 import os
+import torch
+from typing import Optional
 
-class Caption:
+class CaptionGenerator:
+    """
+    Class used to generate captions from single or directory of images
+    """
 
     def __init__(
         self, 
-        processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base"),
-        model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
+        device: Optional[torch.device] = None,
+        processor = None,
+        model = None,
     ):
-        self.processor = processor
-        self.model = model
-    
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.processor = processor if processor is not None else BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base", use_fast=True)
+        self.model = model if model is not None else BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base").to(self.device)
+
     def generate_caption(self, image_path: str) -> str:
+        """Given the path of an image, returns its description as a string"""
+
         image = Image.open(image_path).convert("RGB")
-        inputs = self.processor(images=image, return_tensors="pt")
-        outputs = self.model.generate(
-                **inputs
-                # max_length=1000,
-                # min_length=20
-            )
+        inputs = self.processor(images=image, return_tensors="pt").to(self.device)
+        outputs = self.model.generate(**inputs)
         caption = self.processor.decode(outputs[0], skip_special_tokens=True)
         return caption
     
     def generate_captions(self, dir_path: str = ".\\data\\images\\flickr8k\\Images") -> dict[str, str]:
-        images_names = os.listdir(dir_path)
-        images_names.sort()
-        image_desc = {}
-        for image_name in images_names:
-            caption = self.generate_caption(os.path.join(dir_path, image_name))
-            image_desc[image_name] = caption
-        return image_desc
+        """Given a directory returns the dictionary of pairs image_name and image caption"""
+        captions = {}
+
+        for image_name in sorted(os.listdir(dir_path)):
+            image_path = os.path.join(dir_path, image_name)
+            caption = self.generate_caption(image_path)
+            captions[image_name] = caption
+        return captions
