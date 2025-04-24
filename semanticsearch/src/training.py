@@ -8,7 +8,7 @@ import torch.optim as optim
 import numpy as np
 from typing import List
 from semanticsearch.src.training_data import load_tsv
-from semanticsearch.src.ranking import compute_recall_at_k
+from semanticsearch.src.evaluation import compute_recall_at_k
 
 
 class EmbeddingTrainer:
