@@ -23,13 +23,14 @@ from semanticsearch.src.misc import cprint
 
 # ----- Default Parameters -----
 DEFAULT_EMBEDDINGS_NAME = "_embeddings.npz"
+DEFAULT_MODEL_NAME = "all-MiniLM-L6-v2"
 
 
 class EmbeddingModel:
     """
     The EmbeddingModel class is used to convert text inputs into vector embeddings.
     """
-    def __init__(self, model_name="all-MiniLM-L6-v2"):
+    def __init__(self, model_name=DEFAULT_MODEL_NAME):
         """
         Initialize the embedding model.
 
