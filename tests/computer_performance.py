@@ -3,7 +3,7 @@ This Program evaluates the performance of the PC
 on PyTorch Tensor multiplication.
 
 ----- Scores (GFLOPS) -----
-Omar's laptop:          650
+Omar's laptop:          640
 Omar's old desktop:     210
 
 """
@@ -12,7 +12,7 @@ import time
 import matplotlib.pyplot as plt
 
 
-def measure_performance_with_plot(device='cuda', max_time=1.0, initial_size=1000, scale=1.1):
+def measure_performance_with_plot(device='cuda', max_time=1., initial_size=1000, scale=1.1):
     assert int(initial_size * scale) > initial_size, 'Increase scale'
 
     # Set device to CUDA if available and requested
