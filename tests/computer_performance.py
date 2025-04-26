@@ -3,7 +3,7 @@ This Program evaluates the performance of the PC
 on PyTorch Tensor multiplication.
 
 ----- Scores (GFLOPS) -----
-Omar's laptop:          650
+Omar's laptop:          640
 Omar's old desktop:     210
 
 """
@@ -12,7 +12,9 @@ import time
 import matplotlib.pyplot as plt
 
 
-def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=200):
+def measure_performance_with_plot(device='cuda', max_time=1., initial_size=1000, scale=1.1):
+    assert int(initial_size * scale) > initial_size, 'Increase scale'
+
     # Set device to CUDA if available and requested
     if device == 'cuda' and torch.cuda.is_available():
         device = torch.device('cuda')
@@ -26,7 +28,7 @@ def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=20
     execution_times = []
 
     # Start with an initial tensor size and incrementally increase it
-    current_size = size_increment
+    current_size = initial_size
 
     # Enable interactive mode for matplotlib
     plt.ion()
@@ -97,7 +99,7 @@ def measure_performance_with_plot(device='cuda', max_time=1.0, size_increment=20
             break
 
         # Increase the tensor size for the next iteration
-        current_size += size_increment
+        current_size = int(current_size * scale)
 
     # Disable interactive mode and show the final plot
     plt.ioff()
