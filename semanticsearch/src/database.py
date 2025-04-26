@@ -4,12 +4,16 @@ The Database class handles the documents to retrieve
 in the root directory.
 """
 import os
-from semanticsearch.src.misc import get_extension, read_txt_file, read_csv_file
+from semanticsearch.src.misc import *
 
 
 # ----- Default Parameters -----
 DEFAULT_FILE_READERS = {'txt': read_txt_file,
-                        'csv': read_csv_file}
+                        'csv': read_csv_file,
+                        'pdf': read_pdf_file,
+                        'png': read_image_file,
+                        'jpg': read_image_file,
+}
 
 
 class Database:

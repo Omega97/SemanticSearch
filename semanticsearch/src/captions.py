@@ -15,7 +15,11 @@ class CaptionGenerator:
         processor = None,
         model = None,
     ):
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        if device is None:
+            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        else:
+            self.device = device
+            
         self.processor = processor if processor is not None else BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base", use_fast=True)
         self.model = model if model is not None else BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base").to(self.device)
 
@@ -37,3 +41,9 @@ class CaptionGenerator:
             caption = self.generate_caption(image_path)
             captions[image_name] = caption
         return captions
+
+    def to(self, device: torch.device) -> None:
+        """Updates device attribute and changes device of model"""
+        self.device = device
+        self.model.to(device)
+        
