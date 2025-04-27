@@ -12,14 +12,14 @@ class CaptionGenerator:
     def __init__(
         self, 
         device: Optional[torch.device] = None,
-        processor = None,
+        processor = None, # type?
         model = None,
     ):
         if device is None:
             self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         else:
             self.device = device
-            
+
         self.processor = processor if processor is not None else BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base", use_fast=True)
         self.model = model if model is not None else BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base").to(self.device)
 
@@ -32,7 +32,7 @@ class CaptionGenerator:
         caption = self.processor.decode(outputs[0], skip_special_tokens=True)
         return caption
     
-    def generate_captions(self, dir_path: str = ".\\data\\images\\flickr8k\\Images") -> dict[str, str]:
+    def generate_captions(self, dir_path: str) -> dict[str, str]:
         """Given a directory returns the dictionary of pairs image_name and image caption"""
         captions = {}
 

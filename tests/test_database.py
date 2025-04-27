@@ -2,7 +2,7 @@ from semanticsearch.src.database import Database
 
 
 def test_database(length=200):
-    db = Database("../data/raw")  # Paths to text folder and loc_db file
+    db = Database("./data/raw")  # Paths to text folder and loc_db file
     print("Loaded documents:", db.list_documents())
 
     for sample_file_name in db.list_documents():
