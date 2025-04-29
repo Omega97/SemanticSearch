@@ -129,7 +129,8 @@ class PerformanceEvaluator:
 
 
 class SemanticRetrievalEvaluator:
-    def __init__(self, embedding_model, reranker, tsv_path: str, data_dir: str, k: int = 10):
+    def __init__(self, embedding_model, reranker, tsv_path: str,
+                 data_dir: str, k: int=10, show=True):
         """
         Initialize the evaluator with dataset and configuration.
 
@@ -145,6 +146,7 @@ class SemanticRetrievalEvaluator:
         self.tsv_path = tsv_path
         self.data_dir = data_dir
         self.k = k
+        self.show = show
         self.df = None
         self.rank_counts = [0] * k
         self.misses = 0
@@ -220,7 +222,10 @@ class SemanticRetrievalEvaluator:
         if save_path:
             plt.savefig(save_path, dpi=300, bbox_inches='tight')  # Save with high resolution and tight layout
 
-        plt.show()
+        if self.show:
+            plt.show()
+        else:
+            plt.close()
 
     def run(self, n_max_rows=None, save_path=None):
         print("Preparing documents...")
