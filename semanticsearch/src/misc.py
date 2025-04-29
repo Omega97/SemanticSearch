@@ -1,12 +1,14 @@
 import numpy as np
-import os
 import ctypes
 import csv
 from colorama import Fore, Style
-import fitz
+# import fitz
 from semanticsearch.src.captions import *
 
-caption_generator = None
+
+# ----- Parameters -----
+CAPTION_GENERATOR = None
+
 
 def cprint(text, color_code='w'):
     """
@@ -163,19 +165,21 @@ def read_csv_file(file_path: str, n: int = 2) -> str:
 
     return '\n'.join(result)
 
-def read_pdf_file(file_path: str) -> str:
-    """
-    Reads a pdf file and returns its content
-    """
-    with fitz.open(file_path) as doc:
-        return "".join(page.get_text() for page in doc)
-    
+
+# def read_pdf_file(file_path: str) -> str:   # todo Fix
+#     """
+#     Reads a pdf file and returns its content
+#     """
+#     with fitz.open(file_path) as doc:
+#         return "".join(page.get_text() for page in doc)
+
+
 def read_image_file(file_path: str, device: torch.device = torch.device('cpu')) -> str:
     """
-    Reads a image file and returns a caption for the image
+    Reads an image file and returns a caption for the image
 
     Args:
-        filepath (str): The path to the txt file
+        file_path (str): The path to the txt file
         device (torch.device): device used for the caption generator model
     """
     global caption_generator
@@ -184,6 +188,7 @@ def read_image_file(file_path: str, device: torch.device = torch.device('cpu')) 
     caption_generator.to(device)
     caption = caption_generator.generate_caption(file_path)
     return caption
+
 
 def cosine_similarity(a, b):
     return np.dot(a, b.T)

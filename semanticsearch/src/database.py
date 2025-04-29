@@ -4,16 +4,16 @@ The Database class handles the documents to retrieve
 in the root directory.
 """
 import os
-from semanticsearch.src.misc import *
+from semanticsearch.src import misc
 
 
 # ----- Default Parameters -----
-DEFAULT_FILE_READERS = {'txt': read_txt_file,
-                        'csv': read_csv_file,
-                        'pdf': read_pdf_file,
-                        'png': read_image_file,
-                        'jpg': read_image_file,
-}
+DEFAULT_FILE_READERS = {'txt': misc.read_txt_file,
+                        'csv': misc.read_csv_file,
+                        # 'pdf': misc.read_pdf_file,  # todo Fix
+                        'png': misc.read_image_file,
+                        'jpg': misc.read_image_file,
+                        }
 
 
 class Database:
@@ -56,7 +56,7 @@ class Database:
         # Traverse through the folder and add all .txt file paths to the documents list
         for root, _, files in os.walk(self.folder_path):
             for filename in files:
-                if get_extension(filename) in self.file_readers:
+                if misc.get_extension(filename) in self.file_readers:
                     rel_path = self.get_relative_path(root, filename)
                     self.documents.append(rel_path)
 
@@ -71,7 +71,7 @@ class Database:
             str: The content of the document
         """
         file_path = os.path.join(self.folder_path, relative_path)
-        ext = get_extension(file_path)
+        ext = misc.get_extension(file_path)
         return self.file_readers[ext](file_path, **kwargs)
 
     def list_documents(self):
