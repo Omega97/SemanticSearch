@@ -17,7 +17,8 @@ def test_1():
         'The word panda was borrowed into English from French, but no conclusive explanation of the origin of the French word panda has been found.']
 
     r = Reranker(chunking_enabled=True)
-    docs, scores, chunks = r.doc_rerank(query, docs)
+    result = r.doc_rerank(query, docs)
+    docs, scores, chunks = result['docs'], result['scores'], result['chunks']
 
     for i in range(len(docs)):
         print(f'\n---POSITION {i}:---')
@@ -54,5 +55,5 @@ def test_chunk_splitter(path='..\\data\\raw\\Wikipedia\\Chess.txt',
 
 
 if __name__ == '__main__':
-    # test_1()
-    test_chunk_splitter()
+    test_1()
+    # test_chunk_splitter()
