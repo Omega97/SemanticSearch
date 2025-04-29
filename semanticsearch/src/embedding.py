@@ -110,7 +110,7 @@ class Embeddings:
             # intersect data and all_paths
             self.data = {key: data[key] for key in data if key in self.all_paths}
 
-            cprint(f"Loaded {len(self.data)} embeddings from {self.get_data_file_name()}", "g")
+            cprint(f"\nLoaded {len(self.data)} embeddings from {self.get_data_file_name()}", "g")
         except Exception as e:
             cprint(f"{e}\nFailed to load embeddings, starting fresh.", "r")
             self.data = {}

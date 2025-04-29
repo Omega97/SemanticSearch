@@ -25,7 +25,6 @@ EMBEDDING_MODEL_NAMES = [
 
 # List of suggested reranker model names (typically Hugging Face cross-encoder identifiers)
 RERANKER_MODEL_NAMES = [
-    None,
     # High Performance
     "BAAI/bge-reranker-large",
     "BAAI/bge-reranker-base",
@@ -43,11 +42,12 @@ def test_evaluation(root_dir='..\\..\\data',
                     emb_model_name="all-MiniLM-L6-v2",
                     rerank_model_name: str | None = "BAAI/bge-reranker-large",
                     k_top_docs=10,
-                    n_max_data_rows=100,
+                    n_queries=100,
                     chunking_enabled=False,
                     chunk_size=2000,
                     max_n_chunks=10,
                     chunk_overlap=50,
+                    show=True,
                     ):
     """
     Test performance of the Semantic Retrieval system.
@@ -68,7 +68,7 @@ def test_evaluation(root_dir='..\\..\\data',
             plot_name += f'max-chunks_{max_n_chunks}'
             plot_name += f'overlap_{chunk_overlap}'
     plot_name += f'_{data_name}'
-    plot_name += f'_{n_max_data_rows}_lines'
+    plot_name += f'_{n_queries}_lines'
     plot_name = plot_name.replace('/', '-')
     save_path = f'{root_dir}\\plots\\{plot_name}.png'
 
@@ -84,21 +84,38 @@ def test_evaluation(root_dir='..\\..\\data',
         reranker = Reranker(chunking_enabled=chunking_enabled, chunk_size=chunk_size,
                             max_n_chunks=max_n_chunks, chunk_overlap=chunk_overlap, verbose=False)
 
-    evaluator = SemanticRetrievalEvaluator(embedding_model, reranker,
-                                           tsv_path=tsv_path, data_dir=data_dir, k=k_top_docs)
+    evaluator = SemanticRetrievalEvaluator(embedding_model,
+                                           reranker,
+                                           tsv_path=tsv_path,
+                                           data_dir=data_dir,
+                                           k=k_top_docs,
+                                           show=show)
 
-    evaluator.run(n_max_data_rows, save_path)
+    evaluator.run(n_queries, save_path)
 
 
-def main(root_dir='..\\..\\data'):
+def main(root_dir='..\\..\\data', show=False):
     data_names = os.listdir(os.path.join(root_dir, 'test_dataset'))
 
-    test_evaluation(root_dir=root_dir,
-                    data_name=data_names[2],
-                    emb_model_name=EMBEDDING_MODEL_NAMES[0],
-                    rerank_model_name=RERANKER_MODEL_NAMES[0],
-                    n_max_data_rows=100,
-                    chunking_enabled=False)
+    # No reranking
+    # for i in range(len(data_names)):
+    #     test_evaluation(root_dir=root_dir,
+    #                     data_name=data_names[i],
+    #                     emb_model_name=EMBEDDING_MODEL_NAMES[0],
+    #                     rerank_model_name=None,
+    #                     n_queries=1000,
+    #                     chunking_enabled=False,
+    #                     show=show)
+
+    # With reranking
+    for i in range(len(data_names)):
+        test_evaluation(root_dir=root_dir,
+                        data_name=data_names[i],
+                        emb_model_name=EMBEDDING_MODEL_NAMES[0],
+                        rerank_model_name=RERANKER_MODEL_NAMES[0],
+                        n_queries=10,
+                        chunking_enabled=False,
+                        show=show)
 
 
 if __name__ == '__main__':
