@@ -6,6 +6,7 @@ import numpy as np
 from semanticsearch.src.database import Database
 from semanticsearch.src.embedding import Embeddings
 from semanticsearch.src.misc import cosine_similarity
+from semanticsearch.src.misc import cprint
 
 
 class SemanticRetrieval:
@@ -13,7 +14,7 @@ class SemanticRetrieval:
     Given a query, this class returns an ordering of the provided documents from
     most to leas relevant.
     """
-    def __init__(self, root_dir, embedding_model, reranking_model):
+    def __init__(self, root_dir, embedding_model, reranking_model, verbose=True):
         """
         Initialize the semantic retrieval system
         :param root_dir:
@@ -23,10 +24,15 @@ class SemanticRetrieval:
         self.root_dir = root_dir
         self.embedding_model = embedding_model
         self.reranking_model = reranking_model
+        self.verbose = verbose
 
         self.database = None
         self.embedding_path = None
         self._preprocessing()
+
+    def cprint(self, text, color_code='w'):
+        if self.verbose:
+            cprint(text, color_code)
 
     def _preprocessing(self):
         # Load Database
@@ -54,9 +60,9 @@ class SemanticRetrieval:
         top_scores = sims[top_indices]
 
         # Print similarity-based ranking
-        print("Top results before reranking (by similarity):")
+        self.cprint("Top results before reranking (by similarity):")
         for i, (path, sim_score) in enumerate(zip(top_paths, top_scores)):
-            print(f"{i + 1:2d}. ({sim_score:+.3f}) — {path}")
+            self.cprint(f"{i + 1:2d}. ({sim_score:+.3f}) — {path}")
 
         # Rerank based on semantic relevance
         if self.reranking_model is not None:
@@ -64,9 +70,9 @@ class SemanticRetrieval:
             top_scores = reranked['scores']
             top_paths = [top_paths[i] for i in reranked['permutation']]
 
-        # Print reranked results
-        print("Top results after reranking:")
-        for i, (path, score) in enumerate(zip(top_paths, top_scores)):
-            print(f"{i + 1:2d}. ({score:+.2f}) — {path}")
+            # Print reranked results
+            self.cprint("Top results after reranking:")
+            for i, (path, score) in enumerate(zip(top_paths, top_scores)):
+                self.cprint(f"{i + 1:2d}. ({score:+.2f}) — {path}")
 
         return top_paths

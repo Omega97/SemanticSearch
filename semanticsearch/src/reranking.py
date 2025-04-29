@@ -9,15 +9,16 @@ from semanticsearch.src.misc import cprint
 
 
 # ----- Default Parameters -----
-DEFAULT_RANKER_MODEL = 'BAAI/bge-reranker-large'
+DEFAULT_RANKER_MODEL = "BAAI/bge-reranker-large"
 
 
 class Reranker:
     """
     Sorts the documents from most to least relevant wrt the query.
     """
-    def __init__(self, chunking_enabled=False, chunk_size=2000, max_n_chunks=10,
-                 chunk_overlap=50, ranker_model_name=DEFAULT_RANKER_MODEL):
+    def __init__(self, chunking_enabled=False, chunk_size=2000,
+                 max_n_chunks=10, chunk_overlap=50,
+                 ranker_model_name=DEFAULT_RANKER_MODEL, verbose=True):
         """
         Initialize Reranker object
 
@@ -33,10 +34,15 @@ class Reranker:
             chunk_overlap=chunk_overlap,
         )
         self.max_n_chunks = max_n_chunks
+        self.verbose = verbose
 
         self.top_scores = None
         self.top_docs = None
         self.top_chunks = None
+
+    def cprint(self, text, color_code=None):
+        if self.verbose:
+            cprint(text, color_code)
 
     def _compute_scores(self, query: str, documents: list):
         """Use reranker_model to compute the scores."""
@@ -102,7 +108,7 @@ class Reranker:
         selected with knn. Returns a permutation of the document
         based on a reranking model.
         """
-        cprint(f'Re-ranking {len(top_documents)} documents...', "b")
+        self.cprint(f'Re-ranking {len(top_documents)} documents...', "b")
         self.top_docs = top_documents
 
         if not self.chunking_enabled:

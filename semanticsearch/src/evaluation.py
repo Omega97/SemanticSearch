@@ -6,7 +6,6 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 from semanticsearch.src.semantic_retrieval import SemanticRetrieval
 from semanticsearch.src.embedding import EmbeddingModel
-from semanticsearch.src.reranking import Reranker
 
 
 def compute_counts(A, B):
@@ -130,15 +129,19 @@ class PerformanceEvaluator:
 
 
 class SemanticRetrievalEvaluator:
-    def __init__(self, tsv_path: str, data_dir: str, k: int = 10):
+    def __init__(self, embedding_model, reranker, tsv_path: str, data_dir: str, k: int = 10):
         """
         Initialize the evaluator with dataset and configuration.
 
         Args:
+            embedding_model: embedding model
+            reranker = reranker
             tsv_path (str): Path to the .tsv file with columns [query, document].
             data_dir (str): Directory to store document files.
             k (int): Top-k documents to consider during evaluation.
         """
+        self.embedding_model = embedding_model
+        self.reranker = reranker
         self.tsv_path = tsv_path
         self.data_dir = data_dir
         self.k = k
@@ -161,8 +164,9 @@ class SemanticRetrievalEvaluator:
     def _init_retrieval_system(self):
         return SemanticRetrieval(
             root_dir=self.data_dir,
-            embedding_model=EmbeddingModel(),
-            reranking_model=Reranker()
+            embedding_model=self.embedding_model,
+            reranking_model=self.reranker,
+            verbose=False
         )
 
     def _evaluate_queries(self, retrieval_system, n_max_rows=None):
@@ -187,7 +191,15 @@ class SemanticRetrievalEvaluator:
             except ValueError:
                 self.misses += 1
 
-    def _plot_results(self, title='Semantic Retrieval Evaluation'):
+    def _plot_results(self, title='Semantic Retrieval Evaluation', save_path=None):
+        """
+        Plots the evaluation results and optionally saves the plot to a file.
+
+        Parameters:
+            title (str): The title of the plot.
+            save_path (str, optional): The file path where png the plot should be saved.
+                If None, the plot is not saved.
+        """
         plt.bar(range(1, self.k + 1), self.rank_counts, color='blue', alpha=0.7, label='Hits')
         plt.bar([self.k + 1], [self.misses], color='red', alpha=0.7, label='Misses')
 
@@ -203,9 +215,14 @@ class SemanticRetrievalEvaluator:
         plt.ylim(0, max(max(self.rank_counts), self.misses) * 1.1)
         plt.xticks(range(1, self.k + 2), [str(i) for i in range(1, self.k + 1)] + [f'{self.k + 1}+'])
         plt.title(title)
+
+        # Save the plot if save_path is provided
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')  # Save with high resolution and tight layout
+
         plt.show()
 
-    def run(self, n_max_rows=None):
+    def run(self, n_max_rows=None, save_path=None):
         print("Preparing documents...")
         self._prepare_documents()
 
@@ -218,4 +235,4 @@ class SemanticRetrievalEvaluator:
         print("\nEvaluation complete.")
         print(f"Total queries: {self.n_queries}")
         print(f"Misses (correct doc not in top-{self.k}): {self.misses}")
-        self._plot_results(title=f"Semantic Retrieval Evaluation (Top-{self.k})")
+        self._plot_results(title=f"Semantic Retrieval Evaluation (Top-{self.k})", save_path=save_path)
