@@ -227,7 +227,7 @@ class SemanticRetrievalEvaluator:
         else:
             plt.close()
 
-    def run(self, n_max_rows=None, save_path=None):
+    def run(self, n_max_rows=None, save_path=None, title=None):
         print("Preparing documents...")
         self._prepare_documents()
 
@@ -240,4 +240,6 @@ class SemanticRetrievalEvaluator:
         print("\nEvaluation complete.")
         print(f"Total queries: {self.n_queries}")
         print(f"Misses (correct doc not in top-{self.k}): {self.misses}")
-        self._plot_results(title=f"Semantic Retrieval Evaluation (Top-{self.k})", save_path=save_path)
+
+        self._plot_results(title=title,
+                           save_path=save_path)

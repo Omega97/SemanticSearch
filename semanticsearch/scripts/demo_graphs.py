@@ -60,17 +60,24 @@ def test_evaluation(root_dir='..\\..\\data',
     tsv_path = f'{root_dir}\\test_dataset\\{data_name}.tsv'
     data_dir = f'{root_dir}\\eval\\{data_name}'
     img_path = f'{root_dir}\\plots'
-    plot_name = f'emb_{emb_model_name}'
+
+    # Plot name
+    plot_name = f'{data_name}'
+    plot_name += f'_{n_queries}_queries'
+    plot_name += f'_emb_{emb_model_name}'
     if rerank_model_name is not None:
         plot_name += f'_rerank_{rerank_model_name}'
         if chunking_enabled:
             plot_name += f'chunk-size_{chunk_size}'
             plot_name += f'max-chunks_{max_n_chunks}'
             plot_name += f'overlap_{chunk_overlap}'
-    plot_name += f'_{data_name}'
-    plot_name += f'_{n_queries}_lines'
     plot_name = plot_name.replace('/', '-')
     save_path = f'{root_dir}\\plots\\{plot_name}.png'
+
+    # Title
+    title = f"Semantic Retrieval Evaluation on {data_name} (Top-{k_top_docs})"
+    title += f'\nembedding={emb_model_name}'
+    title += f', reranker={rerank_model_name}'
 
     os.makedirs(img_path, exist_ok=True)
 
@@ -91,7 +98,7 @@ def test_evaluation(root_dir='..\\..\\data',
                                            k=k_top_docs,
                                            show=show)
 
-    evaluator.run(n_queries, save_path)
+    evaluator.run(n_queries, save_path, title=title)
 
 
 def main(root_dir='..\\..\\data', show=False):
@@ -101,21 +108,20 @@ def main(root_dir='..\\..\\data', show=False):
     # for i in range(len(data_names)):
     #     test_evaluation(root_dir=root_dir,
     #                     data_name=data_names[i],
-    #                     emb_model_name=EMBEDDING_MODEL_NAMES[0],
+    #                     emb_model_name=EMBEDDING_MODEL_NAMES[1],
     #                     rerank_model_name=None,
     #                     n_queries=1000,
     #                     chunking_enabled=False,
     #                     show=show)
 
     # With reranking
-    for i in range(len(data_names)):
-        test_evaluation(root_dir=root_dir,
-                        data_name=data_names[i],
-                        emb_model_name=EMBEDDING_MODEL_NAMES[0],
-                        rerank_model_name=RERANKER_MODEL_NAMES[0],
-                        n_queries=10,
-                        chunking_enabled=False,
-                        show=show)
+    test_evaluation(root_dir=root_dir,
+                    data_name='foreign_foreign_2000.tsv',
+                    emb_model_name=EMBEDDING_MODEL_NAMES[0],
+                    rerank_model_name=RERANKER_MODEL_NAMES[0],
+                    n_queries=200,
+                    chunking_enabled=False,
+                    show=show)
 
 
 if __name__ == '__main__':
