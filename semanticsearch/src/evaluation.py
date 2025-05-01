@@ -171,16 +171,16 @@ class SemanticRetrievalEvaluator:
             verbose=False
         )
 
-    def _evaluate_queries(self, retrieval_system, n_max_rows=None):
+    def _evaluate_queries(self, retrieval_system, n_queries=None):
 
-        if n_max_rows is None:
+        if n_queries is None:
             iterable = self.df.iterrows()
             length = len(self.df)
         else:
-            iterable = self.df.head(n_max_rows).iterrows()
-            length = n_max_rows
+            iterable = self.df.head(n_queries).iterrows()
+            length = min(n_queries, len(self.df))
 
-        for i, row in tqdm(iterable, total=length):
+        for i, row in tqdm(iterable, total=length, leave=True):
             self.n_queries += 1
             query = row['query']
             correct_doc = f"{i}.txt"
@@ -227,7 +227,7 @@ class SemanticRetrievalEvaluator:
         else:
             plt.close()
 
-    def run(self, n_max_rows=None, save_path=None, title=None):
+    def run(self, n_queries=None, save_path=None, title=None):
         print("Preparing documents...")
         self._prepare_documents()
 
@@ -235,7 +235,7 @@ class SemanticRetrievalEvaluator:
         retrieval_system = self._init_retrieval_system()
 
         print("Evaluating queries...")
-        self._evaluate_queries(retrieval_system, n_max_rows)
+        self._evaluate_queries(retrieval_system, n_queries)
 
         print("\nEvaluation complete.")
         print(f"Total queries: {self.n_queries}")

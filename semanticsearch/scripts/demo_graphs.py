@@ -2,6 +2,7 @@ import os
 from semanticsearch.src.embedding import EmbeddingModel
 from semanticsearch.src.reranking import Reranker
 from semanticsearch.src.evaluation import SemanticRetrievalEvaluator
+import shutil
 
 
 # List of suggested embedding model names (typically Hugging Face identifiers)
@@ -9,14 +10,14 @@ EMBEDDING_MODEL_NAMES = [
     # General Purpose & Performance Balance
     "sentence-transformers/all-MiniLM-L6-v2",
     "sentence-transformers/all-MiniLM-L12-v2",
-    "sentence-transformers/all-mpnet-base-v2",
+    "sentence-transformers/all-mpnet-base-v2",  # good
 
     # Higher Performance (Larger Models)
-    "BAAI/bge-large-en-v1.5",
-    "BAAI/bge-base-en-v1.5",
-    "thenlper/gte-large",
-    "thenlper/gte-base",
-    "sentence-transformers/multi-qa-mpnet-base-dot-v1",  # Tuned for QA/Search
+    "BAAI/bge-large-en-v1.5",  # very good
+    "BAAI/bge-base-en-v1.5",   # good
+    "thenlper/gte-large",  # very good
+    "thenlper/gte-base",   # very good
+    "sentence-transformers/multi-qa-mpnet-base-dot-v1",  # Tuned for QA/Search, good
 
     # Multilingual
     "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
@@ -82,7 +83,7 @@ def test_evaluation(root_dir='..\\..\\data',
     os.makedirs(img_path, exist_ok=True)
 
     # Init Embedding Model
-    embedding_model = EmbeddingModel()
+    embedding_model = EmbeddingModel(model_name=emb_model_name)
 
     # Init Reranker
     if rerank_model_name is None:
@@ -102,7 +103,6 @@ def test_evaluation(root_dir='..\\..\\data',
 
 
 def main(root_dir='..\\..\\data', show=False):
-    data_names = os.listdir(os.path.join(root_dir, 'test_dataset'))
 
     # No reranking
     # for i in range(len(data_names)):
@@ -114,14 +114,31 @@ def main(root_dir='..\\..\\data', show=False):
     #                     chunking_enabled=False,
     #                     show=show)
 
+    # Change embeddings
+    data_name = 'foreign_foreign_2000'  # 'papers_dataset_924'
+    for i in range(len(EMBEDDING_MODEL_NAMES)):
+        path = os.path.join(root_dir, 'eval', data_name)
+        try:
+            shutil.rmtree(path)
+            print(f'Removed {path}')
+        except FileNotFoundError:
+            print(f'Creating {path}...')
+        test_evaluation(root_dir=root_dir,
+                        data_name=f'{data_name}.tsv',
+                        emb_model_name=EMBEDDING_MODEL_NAMES[i],
+                        rerank_model_name=None,
+                        n_queries=1000,
+                        chunking_enabled=False,
+                        show=show)
+
     # With reranking
-    test_evaluation(root_dir=root_dir,
-                    data_name='foreign_foreign_2000.tsv',
-                    emb_model_name=EMBEDDING_MODEL_NAMES[0],
-                    rerank_model_name=RERANKER_MODEL_NAMES[0],
-                    n_queries=200,
-                    chunking_enabled=False,
-                    show=show)
+    # test_evaluation(root_dir=root_dir,
+    #                 data_name='papers_dataset_924.tsv',
+    #                 emb_model_name=EMBEDDING_MODEL_NAMES[0],
+    #                 rerank_model_name=RERANKER_MODEL_NAMES[0],
+    #                 n_queries=200,
+    #                 chunking_enabled=False,
+    #                 show=show)
 
 
 if __name__ == '__main__':
