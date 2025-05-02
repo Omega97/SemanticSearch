@@ -130,7 +130,7 @@ class PerformanceEvaluator:
 
 class SemanticRetrievalEvaluator:
     def __init__(self, embedding_model, reranker, tsv_path: str,
-                 data_dir: str, k: int=10, show=True):
+                 data_dir: str, k: int=10, show=True, recompute_embeddings=False):
         """
         Initialize the evaluator with dataset and configuration.
 
@@ -147,6 +147,7 @@ class SemanticRetrievalEvaluator:
         self.data_dir = data_dir
         self.k = k
         self.show = show
+        self.recompute_embeddings = recompute_embeddings
         self.df = None
         self.rank_counts = [0] * k
         self.misses = 0
@@ -168,7 +169,8 @@ class SemanticRetrievalEvaluator:
             root_dir=self.data_dir,
             embedding_model=self.embedding_model,
             reranking_model=self.reranker,
-            verbose=False
+            verbose=False,
+            recompute_embeddings=self.recompute_embeddings,
         )
 
     def _evaluate_queries(self, retrieval_system, n_queries=None):

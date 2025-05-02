@@ -4,13 +4,14 @@ import csv
 from colorama import Fore, Style
 # import fitz
 from semanticsearch.src.captions import *
+from tqdm import tqdm
 
 
 # ----- Parameters -----
 CAPTION_GENERATOR = None
 
 
-def cprint(text, color_code='w'):
+def cprint(text, color_code='w', use_tqdm=True):
     """
     Print text in a specified color using colorama.
 
@@ -42,7 +43,10 @@ def cprint(text, color_code='w'):
     color = color_map.get(code, Fore.WHITE)
 
     # Print the text in the specified color and reset afterward
-    print(f"{color}{text}{Style.RESET_ALL}")
+    if use_tqdm:
+        tqdm.write(f"{color}{text}{Style.RESET_ALL}")
+    else:
+        print(f"{color}{text}{Style.RESET_ALL}")
 
 
 def pprint(text, width):

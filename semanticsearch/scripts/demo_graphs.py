@@ -49,6 +49,7 @@ def test_evaluation(root_dir='..\\..\\data',
                     max_n_chunks=10,
                     chunk_overlap=50,
                     show=True,
+                    recompute_embeddings=False,
                     ):
     """
     Test performance of the Semantic Retrieval system.
@@ -97,12 +98,14 @@ def test_evaluation(root_dir='..\\..\\data',
                                            tsv_path=tsv_path,
                                            data_dir=data_dir,
                                            k=k_top_docs,
-                                           show=show)
+                                           show=show,
+                                           recompute_embeddings=recompute_embeddings)
 
     evaluator.run(n_queries, save_path, title=title)
 
 
-def main(root_dir='..\\..\\data', show=False):
+def main(root_dir='..\\..\\data', data_dir='..\\..\\data\\test_dataset', show=False):
+    datasets = os.listdir(data_dir)
 
     # No reranking
     # for i in range(len(data_names)):
@@ -115,30 +118,37 @@ def main(root_dir='..\\..\\data', show=False):
     #                     show=show)
 
     # Change embeddings
-    data_name = 'foreign_foreign_2000'  # 'papers_dataset_924'
-    for i in range(len(EMBEDDING_MODEL_NAMES)):
-        path = os.path.join(root_dir, 'eval', data_name)
-        try:
-            shutil.rmtree(path)
-            print(f'Removed {path}')
-        except FileNotFoundError:
-            print(f'Creating {path}...')
-        test_evaluation(root_dir=root_dir,
-                        data_name=f'{data_name}.tsv',
-                        emb_model_name=EMBEDDING_MODEL_NAMES[i],
-                        rerank_model_name=None,
-                        n_queries=1000,
-                        chunking_enabled=False,
-                        show=show)
+    # data_name = 'foreign_foreign_2000'  # 'papers_dataset_924'
+    # for i in range(len(EMBEDDING_MODEL_NAMES)):
+    #     test_evaluation(root_dir=root_dir,
+    #                     data_name=f'{data_name}.tsv',
+    #                     emb_model_name=EMBEDDING_MODEL_NAMES[i],
+    #                     rerank_model_name=None,
+    #                     n_queries=1000,
+    #                     chunking_enabled=False,
+    #                     show=show,
+    #                     recompute_embeddings=True)
+
+    # All datasets
+    # for i in range(len(datasets)):
+    #     test_evaluation(root_dir=root_dir,
+    #                     data_name=datasets[i],
+    #                     emb_model_name='thenlper/gte-base',
+    #                     rerank_model_name=None, # RERANKER_MODEL_NAMES[0]
+    #                     n_queries=200,
+    #                     chunking_enabled=False,
+    #                     show=show,
+    #                     recompute_embeddings=True)
 
     # With reranking
-    # test_evaluation(root_dir=root_dir,
-    #                 data_name='papers_dataset_924.tsv',
-    #                 emb_model_name=EMBEDDING_MODEL_NAMES[0],
-    #                 rerank_model_name=RERANKER_MODEL_NAMES[0],
-    #                 n_queries=200,
-    #                 chunking_enabled=False,
-    #                 show=show)
+    test_evaluation(root_dir=root_dir,
+                    data_name='golden_answer_2000',
+                    emb_model_name='thenlper/gte-base',
+                    rerank_model_name=RERANKER_MODEL_NAMES[2],  # None
+                    n_queries=200,
+                    chunking_enabled=False,
+                    show=show,
+                    recompute_embeddings=False)
 
 
 if __name__ == '__main__':

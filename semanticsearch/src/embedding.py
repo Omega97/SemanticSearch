@@ -69,7 +69,8 @@ class Embeddings:
     def __init__(self, dir_path: str,
                  database: Database,
                  embedding_model: EmbeddingModel,
-                 data_file_name=DEFAULT_EMBEDDINGS_NAME):
+                 data_file_name=DEFAULT_EMBEDDINGS_NAME,
+                 recompute_embeddings=False):
         """
         Initializes the Embeddings class with a directory path.
 
@@ -81,6 +82,7 @@ class Embeddings:
         self.database = database
         self.embedding_model = embedding_model
         self.data_file_name = data_file_name
+        self.recompute_embeddings = recompute_embeddings
         self.data = {}  # Dictionary to store {name: embedding}
         self.missing_embeddings = None
         self._load()
@@ -110,56 +112,10 @@ class Embeddings:
             # intersect data and all_paths
             self.data = {key: data[key] for key in data if key in self.all_paths}
 
-            cprint(f"\nLoaded {len(self.data)} embeddings from {self.get_data_file_name()}", "g")
+            cprint(f"\rLoaded {len(self.data)} embeddings from {self.get_data_file_name()}", "g")
         except Exception as e:
             cprint(f"{e}\nFailed to load embeddings, starting fresh.", "r")
             self.data = {}
-
-    def _find_missing_embeddings(self):
-        """
-        Identifies documents in the database that do not yet have embeddings.
-        """
-        all_paths_set = set(self.all_paths)
-        existing_keys_set = set(self.data.keys())
-        self.missing_embeddings = list(all_paths_set - existing_keys_set)
-
-    def _compute_missing_embeddings(self):
-        if not self.missing_embeddings:
-            print("No new documents to embed.")
-            return
-
-        texts = [self.database.get_document(p) for p in self.missing_embeddings]
-        embeddings = self.embedding_model.encode(texts)
-        print(f'Extending with {len(embeddings)} embeddings')
-        self.extend(self.missing_embeddings, embeddings)
-        self._save()
-
-    def _load(self):
-        """
-        Loads the embeddings from disk into the instance attribute `self.data`.
-        """
-        # Set up the environment
-        self._setup()
-
-        # Load file paths from Database
-        self._load_file_paths_from_database()
-
-        # Load existing embeddings
-        self._load_embeddings_from_file()
-
-        # Find out what embeddings are missing
-        self._find_missing_embeddings()
-
-        # Compute missing embeddings
-        self._compute_missing_embeddings()
-
-    def _save(self):
-        """
-        Saves the embeddings from the instance attribute `self.data` to disk.
-        """
-        np.savez(file=self.get_data_file_name(), **self.data)
-        if len(self.data):
-            cprint(f"Saved {len(self.data)} embeddings to {self.get_data_file_name()}", "green")
 
     def extend(self, names: list[str], embeddings: np.ndarray):
         """
@@ -182,6 +138,54 @@ class Embeddings:
             self.data[name] = embedding
 
         cprint(f"Extended embeddings to {len(self.data)} entries.", "g")
+
+    def _find_missing_embeddings(self):
+        """
+        Identifies documents in the database that do not yet have embeddings.
+        """
+        all_paths_set = set(self.all_paths)
+        existing_keys_set = set(self.data.keys())
+        self.missing_embeddings = list(all_paths_set - existing_keys_set)
+
+    def _compute_missing_embeddings(self):
+        if not self.missing_embeddings:
+            print("No new documents to embed.")
+            return
+
+        print(f'Computing {len(self.missing_embeddings)} embeddings...')
+        texts = [self.database.get_document(p) for p in self.missing_embeddings]
+        embeddings = self.embedding_model.encode(texts)
+        print(f'Extending with {len(embeddings)} embeddings')
+        self.extend(self.missing_embeddings, embeddings)
+        self._save()
+
+    def _load(self):
+        """
+        Loads the embeddings from disk into the instance attribute `self.data`.
+        """
+        # Set up the environment
+        self._setup()
+
+        # Load file paths from Database
+        self._load_file_paths_from_database()
+
+        # Load existing embeddings
+        if not self.recompute_embeddings:
+            self._load_embeddings_from_file()
+
+        # Find out what embeddings are missing
+        self._find_missing_embeddings()
+
+        # Compute missing embeddings
+        self._compute_missing_embeddings()
+
+    def _save(self):
+        """
+        Saves the embeddings from the instance attribute `self.data` to disk.
+        """
+        np.savez(file=self.get_data_file_name(), **self.data)
+        if len(self.data):
+            cprint(f"Saved {len(self.data)} embeddings to {self.get_data_file_name()}", "green")
 
     def remove(self, names: list[str]):
         """

@@ -14,7 +14,7 @@ class SemanticRetrieval:
     Given a query, this class returns an ordering of the provided documents from
     most to leas relevant.
     """
-    def __init__(self, root_dir, embedding_model, reranking_model, verbose=True):
+    def __init__(self, root_dir, embedding_model, reranking_model, verbose=True, recompute_embeddings=False):
         """
         Initialize the semantic retrieval system
         :param root_dir:
@@ -25,6 +25,7 @@ class SemanticRetrieval:
         self.embedding_model = embedding_model
         self.reranking_model = reranking_model
         self.verbose = verbose
+        self.recompute_embeddings = recompute_embeddings
 
         self.database = None
         self.embedding_path = None
@@ -41,7 +42,8 @@ class SemanticRetrieval:
         # Load Embeddings
         self.embeddings = Embeddings(dir_path=self.root_dir,
                                      database=self.database,
-                                     embedding_model=self.embedding_model)
+                                     embedding_model=self.embedding_model,
+                                     recompute_embeddings=self.recompute_embeddings)
 
     def recommend(self, query, k=10):
         """
