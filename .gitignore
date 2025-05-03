@@ -1,6 +1,7 @@
 # Project specific
 data/eval/
 data/plots/
+data/raw/
 semanticsearch.zip
 
 # Byte-compiled / optimized / DLL files
