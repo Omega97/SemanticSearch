@@ -117,6 +117,17 @@ class Embeddings:
             cprint(f"{e}\nFailed to load embeddings, starting fresh.", "r")
             self.data = {}
 
+    def delete_embeddings_file(self):
+        """
+        Deletes the embeddings file from disk if it exists.
+        """
+        file_path = self.get_data_file_name()
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            cprint(f"Deleted embeddings file: {file_path}", "r")
+        else:
+            cprint(f"Embeddings file not found: {file_path}", "y")
+
     def extend(self, names: list[str], embeddings: np.ndarray):
         """
         Extends the embeddings dictionary with new data.
