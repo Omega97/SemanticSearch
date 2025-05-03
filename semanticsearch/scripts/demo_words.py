@@ -1,3 +1,7 @@
+"""
+In this demo we use the Embedding Model to find words
+that are similar (in embedding space) to any given query.
+"""
 import os
 from semanticsearch.src.semantic_retrieval import SemanticRetrieval
 from semanticsearch.src.embedding import EmbeddingModel
@@ -24,6 +28,7 @@ def create_folder(root_dir='..\\..\\data', name='words', n_words=None):
 
 
 def words_demo(root_dir='..\\..\\data\\words', k=10):
+    """Find words that are similar to the query."""
 
     # Load Embedding model
     embedding_model = EmbeddingModel()

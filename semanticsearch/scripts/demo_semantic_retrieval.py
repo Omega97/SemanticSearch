@@ -1,3 +1,7 @@
+"""
+In this demo we retrieve documents from a given folder
+based on the similarity to a given query.
+"""
 from semanticsearch.src.semantic_retrieval import SemanticRetrieval
 from semanticsearch.src.embedding import EmbeddingModel
 from semanticsearch.src.reranking import Reranker
