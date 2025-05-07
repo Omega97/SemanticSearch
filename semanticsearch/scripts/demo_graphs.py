@@ -2,40 +2,7 @@ import os
 from semanticsearch.src.embedding import EmbeddingModel
 from semanticsearch.src.reranking import Reranker
 from semanticsearch.src.evaluation import SemanticRetrievalEvaluator
-import shutil
-
-
-# List of suggested embedding model names (typically Hugging Face identifiers)
-EMBEDDING_MODEL_NAMES = [
-    # General Purpose & Performance Balance
-    "sentence-transformers/all-MiniLM-L6-v2",
-    "sentence-transformers/all-MiniLM-L12-v2",
-    "sentence-transformers/all-mpnet-base-v2",  # good
-
-    # Higher Performance (Larger Models)
-    "BAAI/bge-large-en-v1.5",  # very good
-    "BAAI/bge-base-en-v1.5",   # good
-    "thenlper/gte-large",  # very good
-    "thenlper/gte-base",   # very good
-    "sentence-transformers/multi-qa-mpnet-base-dot-v1",  # Tuned for QA/Search, good
-
-    # Multilingual
-    "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
-    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-]
-
-# List of suggested reranker model names (typically Hugging Face cross-encoder identifiers)
-RERANKER_MODEL_NAMES = [
-    # High Performance
-    "BAAI/bge-reranker-large",
-    "BAAI/bge-reranker-base",
-    "mixedbread-ai/mxbai-rerank-large-v1",  # Another recent strong reranker
-
-    # MS MARCO Fine-tuned (Common for Search)
-    "cross-encoder/ms-marco-MiniLM-L-12-v2",
-    "cross-encoder/ms-marco-MiniLM-L-6-v2",
-    "cross-encoder/ms-marco-electra-base",
-]
+from semanticsearch.src.model_names import load_emb_model_names, load_reranking_model_names
 
 
 def test_evaluation(root_dir='..\\..\\data',
@@ -105,17 +72,23 @@ def test_evaluation(root_dir='..\\..\\data',
 
 
 def main(root_dir='..\\..\\data', data_dir='..\\..\\data\\test_dataset', show=False):
+    """Create the plots of the performance of the models"""
+
+    # Load data and names
     datasets = os.listdir(data_dir)
+    EMBEDDING_MODEL_NAMES = load_emb_model_names('..\\..\\embedding_models.txt')
+    RERANKER_MODEL_NAMES = load_reranking_model_names('..\\..\\reranking_models.txt')
 
     # No reranking
-    # for i in range(len(data_names)):
-    #     test_evaluation(root_dir=root_dir,
-    #                     data_name=data_names[i],
-    #                     emb_model_name=EMBEDDING_MODEL_NAMES[1],
-    #                     rerank_model_name=None,
-    #                     n_queries=1000,
-    #                     chunking_enabled=False,
-    #                     show=show)
+    name = datasets[0]
+    print(name)
+    test_evaluation(root_dir=root_dir,
+                    data_name=name,
+                    emb_model_name=EMBEDDING_MODEL_NAMES[1],
+                    rerank_model_name=None,
+                    n_queries=100,
+                    chunking_enabled=False,
+                    show=show)
 
     # Change embeddings
     # data_name = 'foreign_foreign_2000'  # 'papers_dataset_924'
@@ -141,14 +114,14 @@ def main(root_dir='..\\..\\data', data_dir='..\\..\\data\\test_dataset', show=Fa
     #                     recompute_embeddings=True)
 
     # With reranking
-    test_evaluation(root_dir=root_dir,
-                    data_name='golden_answer_2000',
-                    emb_model_name='thenlper/gte-base',
-                    rerank_model_name=RERANKER_MODEL_NAMES[2],  # None
-                    n_queries=200,
-                    chunking_enabled=False,
-                    show=show,
-                    recompute_embeddings=False)
+    # test_evaluation(root_dir=root_dir,
+    #                 data_name='golden_answer_2000',
+    #                 emb_model_name='thenlper/gte-base',
+    #                 rerank_model_name=RERANKER_MODEL_NAMES[2],  # None
+    #                 n_queries=200,
+    #                 chunking_enabled=False,
+    #                 show=show,
+    #                 recompute_embeddings=False)
 
 
 if __name__ == '__main__':
