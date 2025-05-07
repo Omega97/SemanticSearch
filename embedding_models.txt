@@ -1,0 +1,17 @@
+# List of suggested embedding model names (typically Hugging Face identifiers)
+
+# General Purpose & Performance Balance
+sentence-transformers/all-MiniLM-L6-v2
+sentence-transformers/all-MiniLM-L12-v2
+sentence-transformers/all-mpnet-base-v2  # good
+
+# Higher Performance (Larger Models)
+BAAI/bge-large-en-v1.5  # very good
+BAAI/bge-base-en-v1.5   # good
+thenlper/gte-large  # very good
+thenlper/gte-base   # very good
+sentence-transformers/multi-qa-mpnet-base-dot-v1"  # Tuned for QA/Search, good
+
+# Multilingual
+sentence-transformers/paraphrase-multilingual-mpnet-base-v2
+sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2

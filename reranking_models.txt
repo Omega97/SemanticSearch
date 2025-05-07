@@ -1,0 +1,11 @@
+# List of suggested reranker model names (typically Hugging Face cross-encoder identifiers)
+
+# High Performance
+BAAI/bge-reranker-large
+BAAI/bge-reranker-base
+mixedbread-ai/mxbai-rerank-large-v1  # Another recent strong reranker
+
+# MS MARCO Fine-tuned (Common for Search)
+cross-encoder/ms-marco-MiniLM-L-12-v2
+cross-encoder/ms-marco-MiniLM-L-6-v2
+cross-encoder/ms-marco-electra-base
