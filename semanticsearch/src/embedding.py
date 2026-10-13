@@ -22,7 +22,6 @@ from semanticsearch.src.misc import cprint
 
 
 # ----- Default Parameters -----
-DEFAULT_EMBEDDINGS_NAME = "_embeddings.npz"
 DEFAULT_MODEL_NAME = "all-MiniLM-L6-v2"
 
 
@@ -69,26 +68,30 @@ class Embeddings:
     def __init__(self, dir_path: str,
                  database: Database,
                  embedding_model: EmbeddingModel,
-                 data_file_name=DEFAULT_EMBEDDINGS_NAME,
                  recompute_embeddings=False):
         """
         Initializes the Embeddings class with a directory path.
 
         Args:
             dir_path (str): Path to the directory where embeddings are stored/loaded.
-            embedding_model: embedding_model.encode(texts) returns the matrix of embeddings
+            database (Database): database of the files
+            embedding_model (EmbeddingModel): embedding_model.encode(texts) returns the matrix of embeddings
+            recompute_embeddings (bool): force recompute embeddings
         """
         self.dir_path = dir_path
         self.database = database
         self.embedding_model = embedding_model
-        self.data_file_name = data_file_name
         self.recompute_embeddings = recompute_embeddings
         self.data = {}  # Dictionary to store {name: embedding}
         self.missing_embeddings = None
         self._load()
 
     def get_data_file_name(self) -> str:
-        return os.path.join(self.dir_path, self.data_file_name)
+        model_name = self.embedding_model.model_name
+        model_name = model_name.replace('/', '_')
+        model_name = model_name.replace('\\', '_')
+        name = f'_embeddings_{model_name}.npz'
+        return os.path.join(self.dir_path, name)
 
     def _setup(self):
         """ Set up the environment. """
@@ -220,6 +223,9 @@ class Embeddings:
             del self.data[name]
 
         cprint(f"Removed {len(names)} entries.", "r")
+
+    def get_names(self):
+        return self.data.keys()
 
     def get(self, name: str) -> np.ndarray:
         """
